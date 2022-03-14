@@ -1,0 +1,37 @@
+{
+  "name": "@fabric/react",
+  "version": "0.1.0",
+  "description": "Fabric integration for React",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "mocha tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FabricLabs/fabric-react.git"
+  },
+  "keywords": [
+    "fabric",
+    "react",
+    "bitcoin",
+    "maki",
+    "web",
+    "framework",
+    "p2p",
+    "websockets",
+    "webrtc",
+    "peer",
+    "peers",
+    "peering",
+    "transport",
+    "network",
+    "http",
+    "html"
+  ],
+  "author": "Fabric Labs",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/FabricLabs/fabric-react/issues"
+  },
+  "homepage": "https://github.com/FabricLabs/fabric-react#readme"
+}
