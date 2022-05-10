@@ -35,7 +35,7 @@
   },
   "homepage": "https://github.com/FabricLabs/fabric-react#readme",
   "dependencies": {
-    "@fabric/core": "github:martindale/fabric#swaps-develop",
+    "@fabric/core": "github:FabricLabs/fabric#security/dependencies",
     "elliptic": "^6.5.4"
   },
   "devDependencies": {
