@@ -4,6 +4,7 @@
   "description": "Fabric integration for React",
   "main": "assets/fabric.react.js",
   "scripts": {
+    "build": "rollup -c",
     "test": "mocha tests"
   },
   "repository": {
