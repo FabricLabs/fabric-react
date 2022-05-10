@@ -33,5 +33,8 @@
   "bugs": {
     "url": "https://github.com/FabricLabs/fabric-react/issues"
   },
-  "homepage": "https://github.com/FabricLabs/fabric-react#readme"
+  "homepage": "https://github.com/FabricLabs/fabric-react#readme",
+  "dependencies": {
+    "@fabric/core": "github:martindale/fabric#swaps-develop"
+  }
 }
