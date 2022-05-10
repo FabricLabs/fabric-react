@@ -2,7 +2,7 @@
   "name": "@fabric/react",
   "version": "0.1.0",
   "description": "Fabric integration for React",
-  "main": "src/index.js",
+  "main": "assets/fabric.react.js",
   "scripts": {
     "test": "mocha tests"
   },
@@ -35,6 +35,18 @@
   },
   "homepage": "https://github.com/FabricLabs/fabric-react#readme",
   "dependencies": {
-    "@fabric/core": "github:martindale/fabric#swaps-develop"
+    "@fabric/core": "github:martindale/fabric#swaps-develop",
+    "elliptic": "^6.5.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.10",
+    "@babel/preset-env": "^7.17.10",
+    "@babel/preset-react": "^7.16.7",
+    "@rollup/plugin-babel": "^5.3.1",
+    "@rollup/plugin-commonjs": "^22.0.0",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-jsx": "^1.0.3",
+    "rollup-plugin-node-resolve": "^5.2.0"
   }
 }

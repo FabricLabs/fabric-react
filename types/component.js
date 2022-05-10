@@ -2,7 +2,6 @@
 import * as state from '../settings/state';
 
 // Dependencies
-import * as EC from '../../node_modules/elliptic/lib/elliptic/ec';
 import merge from 'lodash.merge';
 
 import React, { Component } from 'react';
@@ -28,7 +27,6 @@ class FabricComponent extends Component {
 
     // Fabric Actor
     this.actor = new Actor(this.state);
-    this.ec = new EC('secp256k1');
 
     return this;
   }
