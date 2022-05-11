@@ -37,7 +37,8 @@
   "homepage": "https://github.com/FabricLabs/fabric-react#readme",
   "dependencies": {
     "@fabric/core": "github:FabricLabs/fabric#security/dependencies",
-    "elliptic": "^6.5.4"
+    "elliptic": "^6.5.4",
+    "rollup": "^2.72.1"
   },
   "devDependencies": {
     "@babel/core": "^7.17.10",
