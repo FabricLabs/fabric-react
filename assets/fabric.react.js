@@ -1,9 +1,18 @@
-import React$1, { Component } from 'react';
-import { Graphviz } from 'graphviz-react';
-import crypto from 'crypto';
-import events from 'events';
-import { Form, Dropdown, Button, Menu, Icon, Modal } from 'semantic-ui-react';
-import buffer from 'buffer';
+'use strict';
+
+var React$1 = require('react');
+var graphvizReact = require('graphviz-react');
+var crypto = require('crypto');
+var events = require('events');
+var semanticUiReact = require('semantic-ui-react');
+var buffer = require('buffer');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var React__default = /*#__PURE__*/_interopDefaultLegacy(React$1);
+var crypto__default = /*#__PURE__*/_interopDefaultLegacy(crypto);
+var events__default = /*#__PURE__*/_interopDefaultLegacy(events);
+var buffer__default = /*#__PURE__*/_interopDefaultLegacy(buffer);
 
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
@@ -3064,7 +3073,7 @@ class Hash256 {
    */
   constructor (settings = {}) {
     if (typeof settings === 'string') settings = { input: settings };
-    if (!settings.input) settings.input = crypto.randomBytes(32).toString('hex');
+    if (!settings.input) settings.input = crypto__default["default"].randomBytes(32).toString('hex');
 
     this.settings = Object.assign({
       hash: Hash256.digest(settings.input)
@@ -3082,7 +3091,7 @@ class Hash256 {
     }
 
     // consume and output as string
-    return crypto.createHash('sha256').update(input).digest('hex');
+    return crypto__default["default"].createHash('sha256').update(input).digest('hex');
   }
 
   // TODO: document `hash256.value`
@@ -3118,7 +3127,7 @@ var _sortKeys = function _sortKeys (state = {}) {
 
 // Dependencies
 
-const { EventEmitter } = events;
+const { EventEmitter } = events__default["default"];
 
 
 // Fabric Types
@@ -3199,7 +3208,7 @@ class Actor extends EventEmitter {
   }
 
   static randomBytes (count = 32) {
-    return crypto.randomBytes(count);
+    return crypto__default["default"].randomBytes(count);
   }
 
   get id () {
@@ -3309,7 +3318,7 @@ class Actor extends EventEmitter {
   }
 
   randomBytes (count = 32) {
-    return crypto.randomBytes(count);
+    return crypto__default["default"].randomBytes(count);
   }
 
   /**
@@ -3476,9 +3485,9 @@ var FabricComponent = /*#__PURE__*/function (_Component) {
     key: "render",
     value: function render() {
       var dot = 'graph{a--b}';
-      return /*#__PURE__*/React$1.createElement(React$1.Fragment, null, /*#__PURE__*/React$1.createElement("fabric-component", null, /*#__PURE__*/React$1.createElement("fabric-graph", null, /*#__PURE__*/React$1.createElement("svg", {
+      return /*#__PURE__*/React__default["default"].createElement(React__default["default"].Fragment, null, /*#__PURE__*/React__default["default"].createElement("fabric-component", null, /*#__PURE__*/React__default["default"].createElement("fabric-graph", null, /*#__PURE__*/React__default["default"].createElement("svg", {
         id: "graph"
-      }), /*#__PURE__*/React$1.createElement(Graphviz, {
+      }), /*#__PURE__*/React__default["default"].createElement(graphvizReact.Graphviz, {
         dot: dot
       }))));
     }
@@ -3498,7 +3507,7 @@ var FabricComponent = /*#__PURE__*/function (_Component) {
   }]);
 
   return FabricComponent;
-}(Component);
+}(React$1.Component);
 // ```
 // TypeError: Class extends value #<Object> is not a constructor or null
 // Module.<anonymous>
@@ -3516,7 +3525,7 @@ var FabricComponent = /*#__PURE__*/function (_Component) {
 // ...
 // End of @fabric/core/types/component
 
-var createHash = crypto.createHash;
+var createHash = crypto__default["default"].createHash;
 
 var MAX_ALLOC = Math.pow(2, 30) - 1; // default in iojs
 
@@ -3555,7 +3564,7 @@ var safeBuffer = createCommonjsModule(function (module, exports) {
 /*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
 /* eslint-disable node/no-deprecated-api */
 
-var Buffer = buffer.Buffer;
+var Buffer = buffer__default["default"].Buffer;
 
 // alternative to using Object.keys for old browsers
 function copyProps (src, dst) {
@@ -3564,10 +3573,10 @@ function copyProps (src, dst) {
   }
 }
 if (Buffer.from && Buffer.alloc && Buffer.allocUnsafe && Buffer.allocUnsafeSlow) {
-  module.exports = buffer;
+  module.exports = buffer__default["default"];
 } else {
   // Copy properties from require('buffer')
-  copyProps(buffer, exports);
+  copyProps(buffer__default["default"], exports);
   exports.Buffer = SafeBuffer;
 }
 
@@ -3615,7 +3624,7 @@ SafeBuffer.allocUnsafeSlow = function (size) {
   if (typeof size !== 'number') {
     throw new TypeError('Argument must be a number')
   }
-  return buffer.SlowBuffer(size)
+  return buffer__default["default"].SlowBuffer(size)
 };
 });
 safeBuffer.Buffer;
@@ -3634,7 +3643,7 @@ var toBuffer = function (thing, encoding, name) {
   }
 };
 
-var createHmac = crypto.createHmac;
+var createHmac = crypto__default["default"].createHmac;
 
 var sizes = {
   md5: 16,
@@ -3820,7 +3829,7 @@ function nativePBKDF2 (password, salt, iterations, keylen, digest, callback) {
   }
   if (typeof callback !== 'function') throw new Error('No callback provided to pbkdf2')
 
-  return crypto.pbkdf2(password, salt, iterations, keylen, digest, callback)
+  return crypto__default["default"].pbkdf2(password, salt, iterations, keylen, digest, callback)
 }
 
 function nativePBKDF2Sync (password, salt, iterations, keylen, digest) {
@@ -3828,11 +3837,11 @@ function nativePBKDF2Sync (password, salt, iterations, keylen, digest) {
   password = toBuffer(password, defaultEncoding_1, 'Password');
   salt = toBuffer(salt, defaultEncoding_1, 'Salt');
   digest = digest || 'sha1';
-  return crypto.pbkdf2Sync(password, salt, iterations, keylen, digest)
+  return crypto__default["default"].pbkdf2Sync(password, salt, iterations, keylen, digest)
 }
 
 /* istanbul ignore next */
-if (!crypto.pbkdf2Sync || crypto.pbkdf2Sync.toString().indexOf('keylen, digest') === -1) {
+if (!crypto__default["default"].pbkdf2Sync || crypto__default["default"].pbkdf2Sync.toString().indexOf('keylen, digest') === -1) {
   exports.pbkdf2Sync = sync;
   exports.pbkdf2 = async;
 
@@ -3845,7 +3854,7 @@ if (!crypto.pbkdf2Sync || crypto.pbkdf2Sync.toString().indexOf('keylen, digest')
 pbkdf2.pbkdf2Sync;
 pbkdf2.pbkdf2;
 
-var randombytes = crypto.randomBytes;
+var randombytes = crypto__default["default"].randomBytes;
 
 var czech = /*#__PURE__*/Object.freeze({
   __proto__: null
@@ -4240,11 +4249,11 @@ var SeedEntryForm = /*#__PURE__*/function (_Component) {
     key: "render",
     value: function render() {
       // const { fields } = this.state;
-      return /*#__PURE__*/React$1.createElement(React$1.Fragment, null, /*#__PURE__*/React$1.createElement(Form, {
+      return /*#__PURE__*/React__default["default"].createElement(React__default["default"].Fragment, null, /*#__PURE__*/React__default["default"].createElement(semanticUiReact.Form, {
         onSubmit: this.handleSubmit.bind(this)
-      }, /*#__PURE__*/React$1.createElement("label", {
+      }, /*#__PURE__*/React__default["default"].createElement("label", {
         htmlFor: "seed"
-      }, "Seed Phrase (12 or 24 words)"), /*#__PURE__*/React$1.createElement(Dropdown, {
+      }, "Seed Phrase (12 or 24 words)"), /*#__PURE__*/React__default["default"].createElement(semanticUiReact.Dropdown, {
         placeholder: "Your 12 or 24 word seed phrase",
         fluid: true,
         multiple: true,
@@ -4253,7 +4262,7 @@ var SeedEntryForm = /*#__PURE__*/function (_Component) {
         options: this._seedWords,
         minCharacters: 3,
         onChange: this.props.handleChange('seed')
-      }), /*#__PURE__*/React$1.createElement(Button, null, "Load")));
+      }), /*#__PURE__*/React__default["default"].createElement(semanticUiReact.Button, null, "Load")));
     }
   }, {
     key: "saveAndContinue",
@@ -4301,7 +4310,7 @@ var SeedEntryForm = /*#__PURE__*/function (_Component) {
   }]);
 
   return SeedEntryForm;
-}(Component);
+}(React$1.Component);
 
 var FabricIdentity = /*#__PURE__*/function (_FabricComponent) {
   _inherits(FabricIdentity, _FabricComponent);
@@ -4346,19 +4355,19 @@ var FabricIdentity = /*#__PURE__*/function (_FabricComponent) {
   }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Menu.Item, {
+      return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(semanticUiReact.Menu.Item, {
         className: "borderless"
-      }, /*#__PURE__*/React.createElement(Button, {
+      }, /*#__PURE__*/React.createElement(semanticUiReact.Button, {
         icon: true,
         onClick: this._handleCardClick.bind(this),
         labelPosition: "left"
-      }, /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("code", null, this.state.identity || 'anonymous')), /*#__PURE__*/React.createElement(Icon, {
+      }, /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("code", null, this.state.identity || 'anonymous')), /*#__PURE__*/React.createElement(semanticUiReact.Icon, {
         name: "user"
-      }))), /*#__PURE__*/React.createElement(Modal, {
+      }))), /*#__PURE__*/React.createElement(semanticUiReact.Modal, {
         open: this.state.modalOpen,
         onClose: this.handleClose.bind(this),
         closeIcon: true
-      }, /*#__PURE__*/React.createElement(Modal.Header, null, "Login"), /*#__PURE__*/React.createElement(Modal.Content, null, /*#__PURE__*/React.createElement(SeedEntryForm, {
+      }, /*#__PURE__*/React.createElement(semanticUiReact.Modal.Header, null, "Login"), /*#__PURE__*/React.createElement(semanticUiReact.Modal.Content, null, /*#__PURE__*/React.createElement(SeedEntryForm, {
         handleClose: this.handleClose.bind(this),
         handleChange: this.handleChange.bind(this)
       }))));
@@ -4413,8 +4422,8 @@ var FabricIdentity = /*#__PURE__*/function (_FabricComponent) {
   return FabricIdentity;
 }(FabricComponent);
 
-var module = {
+var module$1 = {
   FabricIdentity: FabricIdentity
 };
 
-export { module as default };
+module.exports = module$1;
