@@ -13,16 +13,26 @@ export default [{
     {
       name: 'FabricReact',
       file: pkg.main,
-      format: 'es'
+      format: 'cjs'
     }
   ],
   plugins: [
-    resolve(),
+    resolve({
+
+      // If you have external dependencies installed from
+      // npm, you'll most likely need these plugins. In
+      // some cases you'll need additional configuration �
+      // consult the documentation for details:
+      // https://github.com/rollup/rollup-plugin-commonjs
+        preferBuiltins: true		
+    }),
     babel({ 
         exclude: 'node_modules/**',
         presets: ['@babel/env', '@babel/preset-react']
     }),
-    commonjs()
+    commonjs({
+      preferBuiltins: false
+    })
   ],
   external: [
     'react',
