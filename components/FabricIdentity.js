@@ -1,3 +1,4 @@
+import React from 'react';
 import * as defaults from '../settings/state';
 
 import merge from 'lodash.merge';

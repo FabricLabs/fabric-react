@@ -12,7 +12,7 @@ import { Graphviz } from 'graphviz-react';
 
 // Components
 // import FabricStateMapper from '../StateMapper';
-import * as Actor from '@fabric/core/types/actor';
+import Actor from '@fabric/core/types/actor';
 
 class FabricComponent extends Component {
   constructor (props) {

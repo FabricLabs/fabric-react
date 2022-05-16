@@ -1,6 +1,6 @@
 'use strict';
 
-var React$1 = require('react');
+var React = require('react');
 var graphvizReact = require('graphviz-react');
 var crypto = require('crypto');
 var events = require('events');
@@ -9,7 +9,7 @@ var buffer = require('buffer');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
-var React__default = /*#__PURE__*/_interopDefaultLegacy(React$1);
+var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 var crypto__default = /*#__PURE__*/_interopDefaultLegacy(crypto);
 var events__default = /*#__PURE__*/_interopDefaultLegacy(events);
 var buffer__default = /*#__PURE__*/_interopDefaultLegacy(buffer);
@@ -3418,12 +3418,6 @@ class Actor extends EventEmitter {
 
 var actor = Actor;
 
-var Actor$1 = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  'default': actor,
-  __moduleExports: actor
-});
-
 var FabricComponent = /*#__PURE__*/function (_Component) {
   _inherits(FabricComponent, _Component);
 
@@ -3444,7 +3438,7 @@ var FabricComponent = /*#__PURE__*/function (_Component) {
     } // Fabric Actor
 
 
-    _this.actor = new Actor$1(_this.state);
+    _this.actor = new actor(_this.state);
     return _possibleConstructorReturn(_this, _assertThisInitialized(_this));
   }
 
@@ -3494,11 +3488,11 @@ var FabricComponent = /*#__PURE__*/function (_Component) {
   }, {
     key: "start",
     value: function start() {
-      var actor = new Actor$1(this.state);
-      console.log('actor:', actor);
-      console.log('actor ID:', actor.id.constructor.name, actor.id);
+      var actor$1 = new actor(this.state);
+      console.log('actor:', actor$1);
+      console.log('actor ID:', actor$1.id.constructor.name, actor$1.id);
       this.setState({
-        hash: actor.id
+        hash: actor$1.id
       }); // this.setState({ status: 'STARTED' });
       // d3.select('#graph').graphviz().renderDot('digraph {a -> b}');
 
@@ -3507,7 +3501,7 @@ var FabricComponent = /*#__PURE__*/function (_Component) {
   }]);
 
   return FabricComponent;
-}(React$1.Component);
+}(React.Component);
 // ```
 // TypeError: Class extends value #<Object> is not a constructor or null
 // Module.<anonymous>
@@ -4310,7 +4304,7 @@ var SeedEntryForm = /*#__PURE__*/function (_Component) {
   }]);
 
   return SeedEntryForm;
-}(React$1.Component);
+}(React.Component);
 
 var FabricIdentity = /*#__PURE__*/function (_FabricComponent) {
   _inherits(FabricIdentity, _FabricComponent);
@@ -4355,19 +4349,19 @@ var FabricIdentity = /*#__PURE__*/function (_FabricComponent) {
   }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(semanticUiReact.Menu.Item, {
+      return /*#__PURE__*/React__default["default"].createElement(React__default["default"].Fragment, null, /*#__PURE__*/React__default["default"].createElement(semanticUiReact.Menu.Item, {
         className: "borderless"
-      }, /*#__PURE__*/React.createElement(semanticUiReact.Button, {
+      }, /*#__PURE__*/React__default["default"].createElement(semanticUiReact.Button, {
         icon: true,
         onClick: this._handleCardClick.bind(this),
         labelPosition: "left"
-      }, /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("code", null, this.state.identity || 'anonymous')), /*#__PURE__*/React.createElement(semanticUiReact.Icon, {
+      }, /*#__PURE__*/React__default["default"].createElement("span", null, /*#__PURE__*/React__default["default"].createElement("code", null, this.state.identity || 'anonymous')), /*#__PURE__*/React__default["default"].createElement(semanticUiReact.Icon, {
         name: "user"
-      }))), /*#__PURE__*/React.createElement(semanticUiReact.Modal, {
+      }))), /*#__PURE__*/React__default["default"].createElement(semanticUiReact.Modal, {
         open: this.state.modalOpen,
         onClose: this.handleClose.bind(this),
         closeIcon: true
-      }, /*#__PURE__*/React.createElement(semanticUiReact.Modal.Header, null, "Login"), /*#__PURE__*/React.createElement(semanticUiReact.Modal.Content, null, /*#__PURE__*/React.createElement(SeedEntryForm, {
+      }, /*#__PURE__*/React__default["default"].createElement(semanticUiReact.Modal.Header, null, "Login"), /*#__PURE__*/React__default["default"].createElement(semanticUiReact.Modal.Content, null, /*#__PURE__*/React__default["default"].createElement(SeedEntryForm, {
         handleClose: this.handleClose.bind(this),
         handleChange: this.handleChange.bind(this)
       }))));
