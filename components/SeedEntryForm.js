@@ -75,7 +75,9 @@ class SeedEntryForm extends Component {
       <>
         <Form onSubmit={this.handleSubmit.bind(this)}>
           <label htmlFor='seed'>Seed Phrase (12 or 24 words)</label>
-          <Dropdown placeholder='Your 12 or 24 word seed phrase' fluid multiple search selection options={this._seedWords} minCharacters={3} onChange={this.props.handleChange('seed')} />
+          <Dropdown placeholder='Your 12 or 24 word seed phrase' fluid multiple search selection
+          //  options={this._seedWords} 
+           minCharacters={3} onChange={this.props.handleChange('seed')} />
           <Button>Load</Button>
         </Form>
       </>

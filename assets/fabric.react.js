@@ -4252,8 +4252,8 @@ var SeedEntryForm = /*#__PURE__*/function (_Component) {
         fluid: true,
         multiple: true,
         search: true,
-        selection: true,
-        options: this._seedWords,
+        selection: true //  options={this._seedWords} 
+        ,
         minCharacters: 3,
         onChange: this.props.handleChange('seed')
       }), /*#__PURE__*/React__default["default"].createElement(semanticUiReact.Button, null, "Load")));
