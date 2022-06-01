@@ -1,7 +1,8 @@
 // # Rollup Configuration
 
 // Dependencies
-import babel from 'rollup-plugin-babel';
+import json from '@rollup/plugin-json';
+import babel from '@rollup/plugin-babel';
 import commonjs from 'rollup-plugin-commonjs';
 import minify from 'rollup-plugin-minify'
 import resolve from 'rollup-plugin-node-resolve';
@@ -9,11 +10,29 @@ import pkg from './package.json';
 
 export default [{
   input: 'module.js',
+  external: [
+    'buffer',
+    'crypto',
+    'react',
+    'react-dom',
+    'prop-types',
+    'semantic-ui-react',
+    'trezor-connect'
+  ],
   output: [
     {
       name: 'FabricReact',
       file: pkg.main,
-      format: 'cjs'
+      format: 'cjs',
+      globals: {
+        'buffer': 'Buffer',
+        'crypto': 'Crypto',
+        'react': 'React',
+        'react-dom': 'ReactDOM',
+        'prop-types': 'PropTypes',
+        'semantic-ui-react': 'SemanticUIReact',
+        'trezor-connect': 'TrezorConnect'
+      },
     }
   ],
   plugins: [
@@ -32,14 +51,8 @@ export default [{
     }),
     commonjs({
       preferBuiltins: false
-    })
+    }),
+    json()
   ],
-  external: [
-    'react',
-    'prop-types',
-  ],
-  globals: {
-    react: "React"
-  },
   sourceMap: true
 }];
