@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import * as defaults from '../settings/state';
 
 import merge from 'lodash.merge';
-import FabricComponent from '../types/component';
+// import FabricComponent from '../types/component';
 
 // Components
 import {
@@ -14,7 +14,7 @@ import {
 
 import SeedEntryForm from './SeedEntryForm';
 
-class FabricIdentity extends FabricComponent {
+class FabricIdentity extends Component {
   constructor (props) {
     super(props);
 

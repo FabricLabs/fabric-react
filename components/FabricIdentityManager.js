@@ -1,8 +1,9 @@
+import React, { Component } from 'react';
 // Dependencies
 import merge from 'lodash.merge';
 import TrezorConnect from 'trezor-connect';
 
-import FabricComponent from '../types/component';
+// import FabricComponent from '../types/component';
 
 // Components
 import {
@@ -19,7 +20,7 @@ import {
 import IdentityPicker from './IdentityPicker';
 import SeedEntryForm from './SeedEntryForm';
 
-class FabricIdentityManager extends FabricComponent {
+class FabricIdentityManager extends Component {
   constructor (props) {
     super(props);
 

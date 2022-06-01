@@ -1,10 +1,11 @@
+import React, { Component } from 'react';
+
 // Defaults
 import * as state from '../settings/state';
 
 // Dependencies
 import merge from 'lodash.merge';
 
-import React, { Component } from 'react';
 // import { connect } from 'react-redux';
 // import * as d3 from 'd3';
 // import * as D3GraphViz from 'd3-graphviz';
