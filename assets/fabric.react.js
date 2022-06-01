@@ -2,13 +2,33 @@
 
 var React = require('react');
 var semanticUiReact = require('semantic-ui-react');
+var Remote = require('@fabric/http/types/remote');
 var crypto = require('crypto');
 var buffer = require('buffer');
 var TrezorConnect = require('trezor-connect');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
+function _interopNamespace(e) {
+  if (e && e.__esModule) return e;
+  var n = Object.create(null);
+  if (e) {
+    Object.keys(e).forEach(function (k) {
+      if (k !== 'default') {
+        var d = Object.getOwnPropertyDescriptor(e, k);
+        Object.defineProperty(n, k, d.get ? d : {
+          enumerable: true,
+          get: function () { return e[k]; }
+        });
+      }
+    });
+  }
+  n["default"] = e;
+  return Object.freeze(n);
+}
+
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
+var Remote__namespace = /*#__PURE__*/_interopNamespace(Remote);
 var crypto__default = /*#__PURE__*/_interopDefaultLegacy(crypto);
 var buffer__default = /*#__PURE__*/_interopDefaultLegacy(buffer);
 var TrezorConnect__default = /*#__PURE__*/_interopDefaultLegacy(TrezorConnect);
@@ -37,6 +57,42 @@ function _objectSpread2(target) {
   }
 
   return target;
+}
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
+  try {
+    var info = gen[key](arg);
+    var value = info.value;
+  } catch (error) {
+    reject(error);
+    return;
+  }
+
+  if (info.done) {
+    resolve(value);
+  } else {
+    Promise.resolve(value).then(_next, _throw);
+  }
+}
+
+function _asyncToGenerator(fn) {
+  return function () {
+    var self = this,
+        args = arguments;
+    return new Promise(function (resolve, reject) {
+      var gen = fn.apply(self, args);
+
+      function _next(value) {
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
+      }
+
+      function _throw(err) {
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
+      }
+
+      _next(undefined);
+    });
+  };
 }
 
 function _classCallCheck(instance, Constructor) {
@@ -256,7 +312,7 @@ function getCjsExportFromNamespace (n) {
 
 var playnet = getCjsExportFromNamespace(playnet$2);
 
-({
+var state = {
   seed: null,
   status: 'PAUSED',
   balances: [{
@@ -367,6 +423,36 @@ var playnet = getCjsExportFromNamespace(playnet$2);
     asset: 'BTC'
   }],
   transactions: []
+};
+var state_1 = state.seed;
+var state_2 = state.status;
+var state_3 = state.balances;
+var state_4 = state.chains;
+var state_5 = state.channels;
+var state_6 = state.keys;
+var state_7 = state.http;
+var state_8 = state.identity;
+var state_9 = state.nodes;
+var state_10 = state.orders;
+var state_11 = state.peers;
+var state_12 = state.transactions;
+
+var defaults = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  'default': state,
+  __moduleExports: state,
+  seed: state_1,
+  status: state_2,
+  balances: state_3,
+  chains: state_4,
+  channels: state_5,
+  keys: state_6,
+  http: state_7,
+  identity: state_8,
+  nodes: state_9,
+  orders: state_10,
+  peers: state_11,
+  transactions: state_12
 });
 
 var lodash_merge = createCommonjsModule(function (module, exports) {
@@ -2348,6 +2434,188 @@ function stubFalse() {
 
 module.exports = merge;
 });
+
+var FabricBridge = /*#__PURE__*/function (_Component) {
+  _inherits(FabricBridge, _Component);
+
+  var _super = _createSuper(FabricBridge);
+
+  function FabricBridge(props) {
+    var _this;
+
+    _classCallCheck(this, FabricBridge);
+
+    _this = _super.call(this, props);
+    _this.settings = Object.assign({
+      host: 'localhost',
+      port: 9999,
+      secure: false
+    }, defaults, props);
+    _this.state = lodash_merge({
+      integrity: 'sha256-deadbeefbabe',
+      status: 'disconnected',
+      messages: [],
+      meta: {
+        messages: {
+          count: 0
+        }
+      }
+    }, _this.settings);
+    console.log('bridge settings:', _this.settings);
+    _this.remote = new Remote__namespace({
+      host: _this.settings.host,
+      port: _this.settings.port,
+      secure: _this.settings.secure
+    });
+    /* this.agent = new Worker({
+      service: main,
+      settings: settings
+    }); */
+
+    return _possibleConstructorReturn(_this, _assertThisInitialized(_this));
+  }
+
+  _createClass(FabricBridge, [{
+    key: "_handleRemoteMessage",
+    value: function _handleRemoteMessage(message) {
+      console.log('Remote message:', message);
+
+      this._syncState();
+    }
+  }, {
+    key: "_handleRemoteError",
+    value: function _handleRemoteError(error) {
+      console.log('Remote error:', error);
+    }
+  }, {
+    key: "_syncState",
+    value: function _syncState() {
+      this.setState({
+        status: this.remote._state.status,
+        messages: this.remote._state.messages,
+        meta: this.remote._state.meta
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      console.log('bridge mounted! starting...'); // this.agent.executeMethod('connect');
+      // this.process.executeMethod('connect');
+
+      this.start();
+    }
+  }, {
+    key: "connect",
+    value: function connect() {
+      this._syncState();
+
+      this.remote.connect();
+
+      this._syncState();
+    }
+  }, {
+    key: "executeMethod",
+    value: function executeMethod(name, params) {
+      return this.remote.executeMethod(name, params);
+    }
+  }, {
+    key: "ping",
+    value: function ping() {
+      this.remote.ping();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/React__default["default"].createElement(React__default["default"].Fragment, null, /*#__PURE__*/React__default["default"].createElement(semanticUiReact.Card, {
+        fluid: true
+      }, /*#__PURE__*/React__default["default"].createElement(semanticUiReact.Card.Content, null, /*#__PURE__*/React__default["default"].createElement(semanticUiReact.Button.Group, {
+        floated: "right"
+      }, /*#__PURE__*/React__default["default"].createElement(semanticUiReact.Button, {
+        onClick: this.ping.bind(this)
+      }, "Ping ", /*#__PURE__*/React__default["default"].createElement(semanticUiReact.Icon, {
+        name: "info"
+      })), /*#__PURE__*/React__default["default"].createElement(semanticUiReact.Button, {
+        onClick: this.connect.bind(this)
+      }, "Connect ", /*#__PURE__*/React__default["default"].createElement(semanticUiReact.Icon, {
+        name: "lightning"
+      }))), /*#__PURE__*/React__default["default"].createElement(semanticUiReact.Card.Header, {
+        as: "h3"
+      }, "Bridge")), /*#__PURE__*/React__default["default"].createElement(semanticUiReact.Card.Content, null, /*#__PURE__*/React__default["default"].createElement(semanticUiReact.Feed, null, this.state.messages.map(function (message, i) {
+        return /*#__PURE__*/React__default["default"].createElement(semanticUiReact.Feed.Event, {
+          size: "small",
+          key: i,
+          style: {
+            fontSize: '0.8em',
+            fontFamily: 'monospace'
+          }
+        }, /*#__PURE__*/React__default["default"].createElement(semanticUiReact.Feed.Content, null, /*#__PURE__*/React__default["default"].createElement("div", {
+          style: {
+            color: 'black'
+          }
+        }, JSON.stringify(message, null, '  '))));
+      }))), /*#__PURE__*/React__default["default"].createElement(semanticUiReact.Card.Content, {
+        extra: true
+      }, /*#__PURE__*/React__default["default"].createElement(semanticUiReact.Label, null, /*#__PURE__*/React__default["default"].createElement(semanticUiReact.Icon, {
+        name: "info"
+      }), " ", this.remote._state.status), /*#__PURE__*/React__default["default"].createElement(semanticUiReact.Label, null, /*#__PURE__*/React__default["default"].createElement(semanticUiReact.Icon, {
+        name: "mail"
+      }), " ", this.remote._state.meta.messages.count))));
+    }
+  }, {
+    key: "send",
+    value: function () {
+      var _send = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(message) {
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                return _context.abrupt("return", this.remote.send(message));
+
+              case 1:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function send(_x) {
+        return _send.apply(this, arguments);
+      }
+
+      return send;
+    }()
+  }, {
+    key: "start",
+    value: function () {
+      var _start = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                this.remote.on('ready', this.props.remoteReady.bind(this));
+                this.remote.on('message', this._handleRemoteMessage.bind(this));
+                this.remote.on('error', this._handleRemoteError.bind(this));
+                this.connect();
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function start() {
+        return _start.apply(this, arguments);
+      }
+
+      return start;
+    }()
+  }]);
+
+  return FabricBridge;
+}(React.Component);
 
 var createHash = crypto__default["default"].createHash;
 
@@ -24018,6 +24286,7 @@ var FabricIdentityManager = /*#__PURE__*/function (_Component) {
 }(React.Component);
 
 var module$1 = {
+  FabricBridge: FabricBridge,
   FabricIdentity: FabricIdentity,
   FabricIdentityManager: FabricIdentityManager
 };
