@@ -2,23 +2,14 @@
 
 // Dependencies
 import json from '@rollup/plugin-json';
-import babel from '@rollup/plugin-babel';
 import commonjs from 'rollup-plugin-commonjs';
-import minify from 'rollup-plugin-minify'
+// import minify from 'rollup-plugin-minify'
 import resolve from 'rollup-plugin-node-resolve';
+import babel from '@rollup/plugin-babel';
 import pkg from './package.json';
 
 export default [{
   input: 'module.js',
-  external: [
-    'buffer',
-    'crypto',
-    'react',
-    'react-dom',
-    'prop-types',
-    'semantic-ui-react',
-    'trezor-connect'
-  ],
   output: [
     {
       name: 'FabricReact',
@@ -35,6 +26,15 @@ export default [{
       },
     }
   ],
+  external: [
+    'buffer',
+    'crypto',
+    'react',
+    'react-dom',
+    'prop-types',
+    'semantic-ui-react',
+    'trezor-connect'
+  ],
   plugins: [
     resolve({
 
@@ -43,16 +43,17 @@ export default [{
       // some cases you'll need additional configuration �
       // consult the documentation for details:
       // https://github.com/rollup/rollup-plugin-commonjs
-        preferBuiltins: true		
+        // preferBuiltins: true		
     }),
     babel({ 
         exclude: 'node_modules/**',
-        presets: ['@babel/env', '@babel/preset-react']
+        presets: ['@babel/env', '@babel/preset-react'],
+        babelHelpers: 'bundled'
     }),
     commonjs({
-      preferBuiltins: false
+      // preferBuiltins: false
     }),
     json()
   ],
-  sourceMap: true
+  // sourceMap: true
 }];

@@ -1,34 +1,16 @@
 'use strict';
 
 var React = require('react');
+var playnet = require('@fabric/core/settings/playnet');
 var semanticUiReact = require('semantic-ui-react');
-var Remote = require('@fabric/http/types/remote');
 var crypto = require('crypto');
 var buffer = require('buffer');
 var TrezorConnect = require('trezor-connect');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
-function _interopNamespace(e) {
-  if (e && e.__esModule) return e;
-  var n = Object.create(null);
-  if (e) {
-    Object.keys(e).forEach(function (k) {
-      if (k !== 'default') {
-        var d = Object.getOwnPropertyDescriptor(e, k);
-        Object.defineProperty(n, k, d.get ? d : {
-          enumerable: true,
-          get: function () { return e[k]; }
-        });
-      }
-    });
-  }
-  n["default"] = e;
-  return Object.freeze(n);
-}
-
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
-var Remote__namespace = /*#__PURE__*/_interopNamespace(Remote);
+var playnet__default = /*#__PURE__*/_interopDefaultLegacy(playnet);
 var crypto__default = /*#__PURE__*/_interopDefaultLegacy(crypto);
 var buffer__default = /*#__PURE__*/_interopDefaultLegacy(buffer);
 var TrezorConnect__default = /*#__PURE__*/_interopDefaultLegacy(TrezorConnect);
@@ -57,6 +39,351 @@ function _objectSpread2(target) {
   }
 
   return target;
+}
+
+function _regeneratorRuntime() {
+  /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
+
+  _regeneratorRuntime = function () {
+    return exports;
+  };
+
+  var exports = {},
+      Op = Object.prototype,
+      hasOwn = Op.hasOwnProperty,
+      $Symbol = "function" == typeof Symbol ? Symbol : {},
+      iteratorSymbol = $Symbol.iterator || "@@iterator",
+      asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator",
+      toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
+
+  function define(obj, key, value) {
+    return Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: !0,
+      configurable: !0,
+      writable: !0
+    }), obj[key];
+  }
+
+  try {
+    define({}, "");
+  } catch (err) {
+    define = function (obj, key, value) {
+      return obj[key] = value;
+    };
+  }
+
+  function wrap(innerFn, outerFn, self, tryLocsList) {
+    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator,
+        generator = Object.create(protoGenerator.prototype),
+        context = new Context(tryLocsList || []);
+    return generator._invoke = function (innerFn, self, context) {
+      var state = "suspendedStart";
+      return function (method, arg) {
+        if ("executing" === state) throw new Error("Generator is already running");
+
+        if ("completed" === state) {
+          if ("throw" === method) throw arg;
+          return doneResult();
+        }
+
+        for (context.method = method, context.arg = arg;;) {
+          var delegate = context.delegate;
+
+          if (delegate) {
+            var delegateResult = maybeInvokeDelegate(delegate, context);
+
+            if (delegateResult) {
+              if (delegateResult === ContinueSentinel) continue;
+              return delegateResult;
+            }
+          }
+
+          if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) {
+            if ("suspendedStart" === state) throw state = "completed", context.arg;
+            context.dispatchException(context.arg);
+          } else "return" === context.method && context.abrupt("return", context.arg);
+          state = "executing";
+          var record = tryCatch(innerFn, self, context);
+
+          if ("normal" === record.type) {
+            if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue;
+            return {
+              value: record.arg,
+              done: context.done
+            };
+          }
+
+          "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg);
+        }
+      };
+    }(innerFn, self, context), generator;
+  }
+
+  function tryCatch(fn, obj, arg) {
+    try {
+      return {
+        type: "normal",
+        arg: fn.call(obj, arg)
+      };
+    } catch (err) {
+      return {
+        type: "throw",
+        arg: err
+      };
+    }
+  }
+
+  exports.wrap = wrap;
+  var ContinueSentinel = {};
+
+  function Generator() {}
+
+  function GeneratorFunction() {}
+
+  function GeneratorFunctionPrototype() {}
+
+  var IteratorPrototype = {};
+  define(IteratorPrototype, iteratorSymbol, function () {
+    return this;
+  });
+  var getProto = Object.getPrototypeOf,
+      NativeIteratorPrototype = getProto && getProto(getProto(values([])));
+  NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype);
+  var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype);
+
+  function defineIteratorMethods(prototype) {
+    ["next", "throw", "return"].forEach(function (method) {
+      define(prototype, method, function (arg) {
+        return this._invoke(method, arg);
+      });
+    });
+  }
+
+  function AsyncIterator(generator, PromiseImpl) {
+    function invoke(method, arg, resolve, reject) {
+      var record = tryCatch(generator[method], generator, arg);
+
+      if ("throw" !== record.type) {
+        var result = record.arg,
+            value = result.value;
+        return value && "object" == typeof value && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) {
+          invoke("next", value, resolve, reject);
+        }, function (err) {
+          invoke("throw", err, resolve, reject);
+        }) : PromiseImpl.resolve(value).then(function (unwrapped) {
+          result.value = unwrapped, resolve(result);
+        }, function (error) {
+          return invoke("throw", error, resolve, reject);
+        });
+      }
+
+      reject(record.arg);
+    }
+
+    var previousPromise;
+
+    this._invoke = function (method, arg) {
+      function callInvokeWithMethodAndArg() {
+        return new PromiseImpl(function (resolve, reject) {
+          invoke(method, arg, resolve, reject);
+        });
+      }
+
+      return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg();
+    };
+  }
+
+  function maybeInvokeDelegate(delegate, context) {
+    var method = delegate.iterator[context.method];
+
+    if (undefined === method) {
+      if (context.delegate = null, "throw" === context.method) {
+        if (delegate.iterator.return && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method)) return ContinueSentinel;
+        context.method = "throw", context.arg = new TypeError("The iterator does not provide a 'throw' method");
+      }
+
+      return ContinueSentinel;
+    }
+
+    var record = tryCatch(method, delegate.iterator, context.arg);
+    if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel;
+    var info = record.arg;
+    return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel);
+  }
+
+  function pushTryEntry(locs) {
+    var entry = {
+      tryLoc: locs[0]
+    };
+    1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry);
+  }
+
+  function resetTryEntry(entry) {
+    var record = entry.completion || {};
+    record.type = "normal", delete record.arg, entry.completion = record;
+  }
+
+  function Context(tryLocsList) {
+    this.tryEntries = [{
+      tryLoc: "root"
+    }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0);
+  }
+
+  function values(iterable) {
+    if (iterable) {
+      var iteratorMethod = iterable[iteratorSymbol];
+      if (iteratorMethod) return iteratorMethod.call(iterable);
+      if ("function" == typeof iterable.next) return iterable;
+
+      if (!isNaN(iterable.length)) {
+        var i = -1,
+            next = function next() {
+          for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next;
+
+          return next.value = undefined, next.done = !0, next;
+        };
+
+        return next.next = next;
+      }
+    }
+
+    return {
+      next: doneResult
+    };
+  }
+
+  function doneResult() {
+    return {
+      value: undefined,
+      done: !0
+    };
+  }
+
+  return GeneratorFunction.prototype = GeneratorFunctionPrototype, define(Gp, "constructor", GeneratorFunctionPrototype), define(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) {
+    var ctor = "function" == typeof genFun && genFun.constructor;
+    return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name));
+  }, exports.mark = function (genFun) {
+    return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun;
+  }, exports.awrap = function (arg) {
+    return {
+      __await: arg
+    };
+  }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () {
+    return this;
+  }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) {
+    void 0 === PromiseImpl && (PromiseImpl = Promise);
+    var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl);
+    return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) {
+      return result.done ? result.value : iter.next();
+    });
+  }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () {
+    return this;
+  }), define(Gp, "toString", function () {
+    return "[object Generator]";
+  }), exports.keys = function (object) {
+    var keys = [];
+
+    for (var key in object) keys.push(key);
+
+    return keys.reverse(), function next() {
+      for (; keys.length;) {
+        var key = keys.pop();
+        if (key in object) return next.value = key, next.done = !1, next;
+      }
+
+      return next.done = !0, next;
+    };
+  }, exports.values = values, Context.prototype = {
+    constructor: Context,
+    reset: function (skipTempReset) {
+      if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined);
+    },
+    stop: function () {
+      this.done = !0;
+      var rootRecord = this.tryEntries[0].completion;
+      if ("throw" === rootRecord.type) throw rootRecord.arg;
+      return this.rval;
+    },
+    dispatchException: function (exception) {
+      if (this.done) throw exception;
+      var context = this;
+
+      function handle(loc, caught) {
+        return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught;
+      }
+
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i],
+            record = entry.completion;
+        if ("root" === entry.tryLoc) return handle("end");
+
+        if (entry.tryLoc <= this.prev) {
+          var hasCatch = hasOwn.call(entry, "catchLoc"),
+              hasFinally = hasOwn.call(entry, "finallyLoc");
+
+          if (hasCatch && hasFinally) {
+            if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0);
+            if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc);
+          } else if (hasCatch) {
+            if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0);
+          } else {
+            if (!hasFinally) throw new Error("try statement without catch or finally");
+            if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc);
+          }
+        }
+      }
+    },
+    abrupt: function (type, arg) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+
+        if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) {
+          var finallyEntry = entry;
+          break;
+        }
+      }
+
+      finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null);
+      var record = finallyEntry ? finallyEntry.completion : {};
+      return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record);
+    },
+    complete: function (record, afterLoc) {
+      if ("throw" === record.type) throw record.arg;
+      return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel;
+    },
+    finish: function (finallyLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel;
+      }
+    },
+    catch: function (tryLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+
+        if (entry.tryLoc === tryLoc) {
+          var record = entry.completion;
+
+          if ("throw" === record.type) {
+            var thrown = record.arg;
+            resetTryEntry(entry);
+          }
+
+          return thrown;
+        }
+      }
+
+      throw new Error("illegal catch attempt");
+    },
+    delegateYield: function (iterable, resultName, nextLoc) {
+      return this.delegate = {
+        iterator: values(iterable),
+        resultName: resultName,
+        nextLoc: nextLoc
+      }, "next" === this.method && (this.arg = undefined), ContinueSentinel;
+    }
+  }, exports;
 }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
@@ -154,18 +481,17 @@ function _inherits(subClass, superClass) {
 }
 
 function _getPrototypeOf(o) {
-  _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+  _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) {
     return o.__proto__ || Object.getPrototypeOf(o);
   };
   return _getPrototypeOf(o);
 }
 
 function _setPrototypeOf(o, p) {
-  _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+  _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) {
     o.__proto__ = p;
     return o;
   };
-
   return _setPrototypeOf(o, p);
 }
 
@@ -218,99 +544,6 @@ function _createSuper(Derived) {
     return _possibleConstructorReturn(this, result);
   };
 }
-
-var name = "@network/playnet";
-var network = "testnet";
-var anchor = "BTC";
-var peers = [
-	"02de546951cee477c90c36d38615a338123a7e1fe190f3c117b028f60359b5bc7e@hub.fabric.pub:7777",
-	"02512b88b368b43c93eeb725439df33fa6e30a2b40e22bba7844bc22f675afc76a@54.193.117.227:7777",
-	"02a1933ff21f2d588285f4dc759402e02ae2ad15840243ce79fbb213eaca2b3724@95.217.115.29:7777"
-];
-var mode = "rpc";
-var servers = [
-	"http://YOUR_USERNAME:YOUR_PASSWORD@localhost:18443"
-];
-var currencies = [
-	{
-		name: "BTCA",
-		symbol: "BTCA",
-		service: "btca"
-	},
-	{
-		name: "BTCB",
-		symbol: "BTCB",
-		service: "btcb"
-	}
-];
-var bitcoin = {
-	address: "bcrt1qr26ree4yhcnxsn7rdxj5hgwf6awz2jmwe8t9q6"
-};
-var btca = {
-	name: "BTCA",
-	mode: "rpc",
-	servers: [
-		"http://YOUR_USERNAME:YOUR_PASSWORD@localhost:18443"
-	]
-};
-var btcb = {
-	name: "BTCB",
-	mode: "rpc",
-	servers: [
-		"http://YOUR_USERNAME:YOUR_PASSWORD@localhost:19443"
-	]
-};
-var key = {
-	seed: "letter drastic census knock shield matter crime demand gloom echo romance lizard zebra deliver baby key tackle fire update please sketch coconut balance able",
-	"public": "0223cffd5e94da3c8915c6b868f06d15183c1aeffad8ddf58fcb35a428e3158e71",
-	xprv: "xprv9s21ZrQH143K2jKS8iCu5QQg34zf7k5h1nfJZbuWQxDDSRmyLxt6BmJARp1SwfGtMAwPNEeQmUJpD5DosB4f3YxaJZiUS2wq6TzsNzFiEjJ",
-	xpub: "xpub661MyMwAqRbcFDPuEjjuSYMQb6q9XCoYP1auMzK7yHkCKE77tWCLjZceH4xFT1ZCc3FKpeMnii9JMLHp7n9dvDvz8MJ1CYge2digpGRjk7D"
-};
-var playnet$1 = {
-	name: name,
-	network: network,
-	anchor: anchor,
-	peers: peers,
-	mode: mode,
-	servers: servers,
-	currencies: currencies,
-	bitcoin: bitcoin,
-	btca: btca,
-	btcb: btcb,
-	key: key
-};
-
-var playnet$2 = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  name: name,
-  network: network,
-  anchor: anchor,
-  peers: peers,
-  mode: mode,
-  servers: servers,
-  currencies: currencies,
-  bitcoin: bitcoin,
-  btca: btca,
-  btcb: btcb,
-  key: key,
-  'default': playnet$1
-});
-
-var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
-
-function unwrapExports (x) {
-	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
-}
-
-function createCommonjsModule(fn, module) {
-	return module = { exports: {} }, fn(module, module.exports), module.exports;
-}
-
-function getCjsExportFromNamespace (n) {
-	return n && n['default'] || n;
-}
-
-var playnet = getCjsExportFromNamespace(playnet$2);
 
 var state = {
   seed: null,
@@ -400,7 +633,7 @@ var state = {
   },
   identity: {
     id: '',
-    seed: playnet.key.seed
+    seed: playnet__default["default"].key.seed
   },
   nodes: [
   /**/
@@ -454,6 +687,20 @@ var defaults = /*#__PURE__*/Object.freeze({
   peers: state_11,
   transactions: state_12
 });
+
+var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
+function unwrapExports (x) {
+	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
+}
+
+function createCommonjsModule(fn, module) {
+	return module = { exports: {} }, fn(module, module.exports), module.exports;
+}
+
+function getCjsExportFromNamespace (n) {
+	return n && n['default'] || n;
+}
 
 var lodash_merge = createCommonjsModule(function (module, exports) {
 /**
@@ -2435,6 +2682,913 @@ function stubFalse() {
 module.exports = merge;
 });
 
+var _require = require('@fabric/core/constants'),
+    P2P_CALL = _require.P2P_CALL; // Internal Dependencies
+
+
+require('http');
+
+require('https');
+
+var querystring = require('querystring'); // External Dependencies
+
+
+var fetch = require('node-fetch');
+
+var parser = require('content-type');
+
+require('ws').WebSocket; // Internal Types
+
+
+var Actor = require('@fabric/core/types/actor');
+
+var Message = require('@fabric/core/types/message');
+
+var CONTENT_TYPE = 'application/json';
+/**
+ * Interact with a remote {@link Resource}.  This is currently the only
+ * HTTP-related code that should remain in @fabric/core — all else must
+ * be moved to @fabric/http before final release!
+ * @type {Remote}
+ * @property {Object} config
+ * @property {Boolean} secure
+ */
+
+var Remote = /*#__PURE__*/function (_Actor) {
+  _inherits(Remote, _Actor);
+
+  var _super = _createSuper(Remote);
+
+  /**
+   * An in-memory representation of a node in our network.
+   * @param       {Object} target - Target object.
+   * @param       {String} target.host - Named host, e.g. "localhost".
+   * @param       {String} target.secure - Require TLS session.
+   * @constructor
+   */
+  function Remote() {
+    var _this;
+
+    var config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+    _classCallCheck(this, Remote);
+
+    _this = _super.call(this, config);
+    _this.settings = Object.assign({
+      authority: 'localhost',
+      backoff: 2,
+      entropy: Math.random(),
+      secure: true,
+      host: 'hub.fabric.pub',
+      port: 443
+    }, config);
+    _this.host = _this.settings.host || _this.settings.authority;
+    _this.secure = _this.settings.secure;
+    _this.socket = null;
+    _this.endpoint = "".concat(_this.secure ? 'wss' : 'ws', ":").concat(_this.host, ":").concat(_this.port, "/");
+    _this._nextReconnect = 0;
+    _this._reconnectAttempts = 0;
+    _this._state = {
+      status: 'PAUSED',
+      messages: [],
+      meta: {
+        messages: {
+          count: 0
+        }
+      }
+    };
+    return _possibleConstructorReturn(_this, _assertThisInitialized(_this));
+  }
+
+  _createClass(Remote, [{
+    key: "port",
+    get: function get() {
+      return this.settings.port;
+    }
+  }, {
+    key: "authority",
+    get: function get() {
+      // TODO: use onion address for secure mode
+      var parts = this.settings.authority.split(':');
+      var state = {
+        host: null,
+        secure: null,
+        protocol: null,
+        port: null
+      }; // Check number of components
+
+      switch (parts.length) {
+        default:
+          // TODO: warn about unexpected values
+          state.host = this.settings.host;
+          state.port = this.settings.port;
+          state.secure = this.settings.secure;
+          break;
+
+        case 1:
+          state.host = parts[0];
+          state.port = this.settings.port;
+          state.secure = this.settings.secure;
+          break;
+
+        case 2:
+          state.host = parts[0];
+          state.port = parts[1];
+          state.secure = this.settings.secure;
+          break;
+
+        case 3:
+          state.host = parts[1];
+          state.port = parts[2]; // TODO: should settings override protocol inclusion?
+
+          state.secure = parts[0].charAt(4) === 's';
+          break;
+      } // Finally set protocol for all cases...
+
+
+      state.protocol = !state.secure ? 'http' : 'https';
+      return "".concat(state.protocol, "://").concat(state.host, ":").concat(state.port);
+    }
+  }, {
+    key: "isArrayBufferSupported",
+    get: function get() {
+      return new Buffer(new Uint8Array([1]).buffer)[0] === 1;
+    }
+  }, {
+    key: "arrayBufferToBuffer",
+    get: function get() {
+      return this.isArrayBufferSupported ? this.arrayBufferToBufferAsArgument : this.arrayBufferToBufferCycle;
+    }
+  }, {
+    key: "arrayBufferToBufferAsArgument",
+    value: function arrayBufferToBufferAsArgument(ab) {
+      return new Buffer(ab);
+    }
+  }, {
+    key: "arrayBufferToBufferCycle",
+    value: function arrayBufferToBufferCycle(ab) {
+      var buffer = new Buffer(ab.byteLength);
+      var view = new Uint8Array(ab);
+
+      for (var i = 0; i < buffer.length; ++i) {
+        buffer[i] = view[i];
+      }
+
+      return buffer;
+    }
+  }, {
+    key: "_handleSocketClose",
+    value: function () {
+      var _handleSocketClose2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(message) {
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                this._state.status = 'CLOSED';
+                console.log('[FABRIC:REMOTE]', 'Socket close:', message);
+                this._reconnectAttempts++;
+                this._reconnector = setTimeout(this.connect.bind(this), this._nextReconnect);
+                this._nextReconnect = Math.pow(this.settings.backoff, this._reconnectAttempts) * 1000 * Math.random();
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function _handleSocketClose(_x) {
+        return _handleSocketClose2.apply(this, arguments);
+      }
+
+      return _handleSocketClose;
+    }()
+  }, {
+    key: "_handleSocketError",
+    value: function () {
+      var _handleSocketError2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(message) {
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                console.error('[FABRIC:REMOTE]', 'Socket error:', message);
+                this.emit('error', message);
+
+              case 2:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function _handleSocketError(_x2) {
+        return _handleSocketError2.apply(this, arguments);
+      }
+
+      return _handleSocketError;
+    }()
+  }, {
+    key: "_handleSocketMessage",
+    value: function () {
+      var _handleSocketMessage2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(packet) {
+        var length, buffer, message;
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                this.emit('debug', "[FABRIC:REMOTE] Socket packet ".concat(JSON.stringify(packet)));
+                length = packet.data.byteLength;
+                console.log('length:', length);
+                buffer = Buffer.from(packet.data);
+                console.log('buffer:', buffer);
+                message = Message.fromRaw(buffer).toObject();
+                console.log('message:', message);
+
+                this._state.messages.push(message);
+
+                ++this._state.meta.messages.count;
+                this.emit('message', message);
+
+              case 10:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function _handleSocketMessage(_x3) {
+        return _handleSocketMessage2.apply(this, arguments);
+      }
+
+      return _handleSocketMessage;
+    }()
+  }, {
+    key: "_handleSocketOpen",
+    value: function () {
+      var _handleSocketOpen2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(message) {
+        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                this._nextReconnect = 0;
+                this._reconnectAttempts = 0;
+                if (this._reconnector) clearTimeout(this._reconnector);
+                this._state.status = 'CONNECTED';
+                this.emit('ready');
+
+              case 5:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+
+      function _handleSocketOpen(_x4) {
+        return _handleSocketOpen2.apply(this, arguments);
+      }
+
+      return _handleSocketOpen;
+    }()
+  }, {
+    key: "executeMethod",
+    value: function () {
+      var _executeMethod = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(name) {
+        var params,
+            call,
+            _args5 = arguments;
+        return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                params = _args5.length > 1 && _args5[1] !== undefined ? _args5[1] : [];
+                call = Message.fromVector([P2P_CALL, JSON.stringify([name, params])]);
+                console.log('call:', call);
+                console.log('raw:', call.toRaw());
+                return _context5.abrupt("return", this.socket.send(call.toRaw()));
+
+              case 5:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5, this);
+      }));
+
+      function executeMethod(_x5) {
+        return _executeMethod.apply(this, arguments);
+      }
+
+      return executeMethod;
+    }()
+  }, {
+    key: "connect",
+    value: function () {
+      var _connect = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
+        return _regeneratorRuntime().wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                this._state.status = 'CONNECTING';
+
+                try {
+                  this.socket = new WebSocket(this.endpoint);
+                  console.log('socket:', this.socket);
+                } catch (exception) {
+                  console.error('[FABRIC:REMOTE]', 'Unable to connect:', exception);
+                }
+
+                if (this.socket) {
+                  this.socket.binaryType = 'arraybuffer';
+                  this.socket.addEventListener('close', this._handleSocketClose.bind(this));
+                  this.socket.addEventListener('open', this._handleSocketOpen.bind(this));
+                  this.socket.addEventListener('message', this._handleSocketMessage.bind(this));
+                  this.socket.addEventListener('error', this._handleSocketError.bind(this));
+                }
+
+                return _context6.abrupt("return", this);
+
+              case 4:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6, this);
+      }));
+
+      function connect() {
+        return _connect.apply(this, arguments);
+      }
+
+      return connect;
+    }()
+    /**
+     * Enumerate the available Resources on the remote host.
+     * @return {Configuration} An object with enumerable key/value pairs for the Application Resource Contract.
+     */
+
+  }, {
+    key: "enumerate",
+    value: function () {
+      var _enumerate = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7() {
+        var options, results, name, definition;
+        return _regeneratorRuntime().wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                _context7.next = 2;
+                return this._OPTIONS('/');
+
+              case 2:
+                options = _context7.sent;
+                results = [];
+
+                for (name in options) {
+                  definition = options[name];
+                  results.push({
+                    name: definition.name,
+                    description: definition.description,
+                    components: Object.assign({
+                      list: 'maki-resource-list',
+                      view: 'maki-resource-view'
+                    }, definition.components),
+                    routes: definition.routes,
+                    attributes: definition.attributes,
+                    names: definition.names
+                  });
+                }
+
+                return _context7.abrupt("return", options);
+
+              case 6:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7, this);
+      }));
+
+      function enumerate() {
+        return _enumerate.apply(this, arguments);
+      }
+
+      return enumerate;
+    }()
+    /**
+     * Make an HTTP request to the configured authority.
+     * @param {String} type One of `GET`, `PUT`, `POST`, `DELETE`, or `OPTIONS`.
+     * @param {String} path The path to request from the authority.
+     * @param {Object} [params] Options.
+     * @returns {FabricHTTPResult}
+     */
+
+  }, {
+    key: "request",
+    value: function () {
+      var _request = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8(type, path) {
+        var params,
+            self,
+            url,
+            result,
+            response,
+            headers,
+            opts,
+            formatter,
+            _args8 = arguments;
+        return _regeneratorRuntime().wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                params = _args8.length > 2 && _args8[2] !== undefined ? _args8[2] : {};
+                self = this;
+                url = this.authority + path;
+                result = null;
+                response = null;
+                headers = {
+                  'Accept': CONTENT_TYPE,
+                  'Content-Type': CONTENT_TYPE
+                };
+                opts = {
+                  method: type,
+                  headers: headers
+                }; // TODO: break out into independent auth module
+
+                if (this.settings.username || this.settings.password) {
+                  headers['Authorization'] = "Basic ".concat(Buffer.from([this.settings.username || '', this.settings.password || ''].join(':')).toString('base64'));
+                }
+
+                _context8.t0 = params.mode;
+                _context8.next = _context8.t0 === 'query' ? 11 : 13;
+                break;
+
+              case 11:
+                url += '?' + querystring.stringify(params.body);
+                return _context8.abrupt("break", 16);
+
+              case 13:
+                try {
+                  opts.body = JSON.stringify(params.body);
+                } catch (exception) {
+                  console.error('[FABRIC:REMOTE] Could not prepare request:', exception);
+                }
+
+                opts = Object.assign(opts, {
+                  body: params.body || null
+                });
+                return _context8.abrupt("break", 16);
+
+              case 16:
+                _context8.prev = 16;
+                _context8.next = 19;
+                return fetch(url, opts);
+
+              case 19:
+                response = _context8.sent;
+                _context8.next = 25;
+                break;
+
+              case 22:
+                _context8.prev = 22;
+                _context8.t1 = _context8["catch"](16);
+                self.emit('error', "[REMOTE] exception: ".concat(_context8.t1));
+
+              case 25:
+                if (response) {
+                  _context8.next = 27;
+                  break;
+                }
+
+                return _context8.abrupt("return", {
+                  status: 'error',
+                  message: 'No response to request.'
+                });
+
+              case 27:
+                _context8.t2 = response.status;
+                _context8.next = _context8.t2 === 404 ? 30 : 32;
+                break;
+
+              case 30:
+                result = {
+                  status: 'error',
+                  message: 'Document not found.'
+                };
+                return _context8.abrupt("break", 57);
+
+              case 32:
+                if (!response.ok) {
+                  _context8.next = 54;
+                  break;
+                }
+
+                formatter = parser.parse(response.headers.get('content-type'));
+                _context8.t3 = formatter.type;
+                _context8.next = _context8.t3 === 'application/json' ? 37 : 47;
+                break;
+
+              case 37:
+                _context8.prev = 37;
+                _context8.next = 40;
+                return response.json();
+
+              case 40:
+                result = _context8.sent;
+                _context8.next = 46;
+                break;
+
+              case 43:
+                _context8.prev = 43;
+                _context8.t4 = _context8["catch"](37);
+                console.error('[REMOTE]', 'Could not parse JSON:', _context8.t4);
+
+              case 46:
+                return _context8.abrupt("break", 52);
+
+              case 47:
+                if (this.settings.verbosity >= 4) self.emit('warning', "[FABRIC:REMOTE] Unhandled headers content type: ".concat(formatter.type));
+                _context8.next = 50;
+                return response.text();
+
+              case 50:
+                result = _context8.sent;
+                return _context8.abrupt("break", 52);
+
+              case 52:
+                _context8.next = 56;
+                break;
+
+              case 54:
+                if (this.settings.verbosity >= 4) console.warn('[FABRIC:REMOTE]', 'Unmanaged HTTP status code:', response.status);
+
+                try {
+                  result = response.json();
+                } catch (exception) {
+                  result = response.text();
+                }
+
+              case 56:
+                return _context8.abrupt("break", 57);
+
+              case 57:
+                return _context8.abrupt("return", result);
+
+              case 58:
+              case "end":
+                return _context8.stop();
+            }
+          }
+        }, _callee8, this, [[16, 22], [37, 43]]);
+      }));
+
+      function request(_x6, _x7) {
+        return _request.apply(this, arguments);
+      }
+
+      return request;
+    }()
+  }, {
+    key: "ping",
+    value: function () {
+      var _ping = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee9() {
+        return _regeneratorRuntime().wrap(function _callee9$(_context9) {
+          while (1) {
+            switch (_context9.prev = _context9.next) {
+              case 0:
+                this.send({
+                  created: new Date().toISOString(),
+                  type: 'PING'
+                });
+
+              case 1:
+              case "end":
+                return _context9.stop();
+            }
+          }
+        }, _callee9, this);
+      }));
+
+      function ping() {
+        return _ping.apply(this, arguments);
+      }
+
+      return ping;
+    }()
+  }, {
+    key: "send",
+    value: function () {
+      var _send = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee10(message) {
+        var msg, raw, actor;
+        return _regeneratorRuntime().wrap(function _callee10$(_context10) {
+          while (1) {
+            switch (_context10.prev = _context10.next) {
+              case 0:
+                msg = Message.fromVector(['GenericMessage', JSON.stringify(message)]);
+                raw = msg.toRaw();
+                actor = new Actor({
+                  content: raw.toString('hex')
+                });
+                this.socket.send(raw);
+                return _context10.abrupt("return", actor.id);
+
+              case 5:
+              case "end":
+                return _context10.stop();
+            }
+          }
+        }, _callee10, this);
+      }));
+
+      function send(_x8) {
+        return _send.apply(this, arguments);
+      }
+
+      return send;
+    }()
+  }, {
+    key: "sendAsJSON",
+    value: function () {
+      var _sendAsJSON = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee11(message) {
+        return _regeneratorRuntime().wrap(function _callee11$(_context11) {
+          while (1) {
+            switch (_context11.prev = _context11.next) {
+              case 0:
+                this.socket.send({
+                  content: message
+                });
+
+              case 1:
+              case "end":
+                return _context11.stop();
+            }
+          }
+        }, _callee11, this);
+      }));
+
+      function sendAsJSON(_x9) {
+        return _sendAsJSON.apply(this, arguments);
+      }
+
+      return sendAsJSON;
+    }()
+    /**
+     * HTTP PUT against the configured Authority.
+     * @param  {String} path - HTTP Path to request.
+     * @param  {Object} body - Map of parameters to supply.
+     * @return {FabricHTTPResult|String} Result of request.
+     */
+
+  }, {
+    key: "_PUT",
+    value: function () {
+      var _PUT2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee12(key, body) {
+        return _regeneratorRuntime().wrap(function _callee12$(_context12) {
+          while (1) {
+            switch (_context12.prev = _context12.next) {
+              case 0:
+                return _context12.abrupt("return", this.request('put', key, {
+                  body: body
+                }));
+
+              case 1:
+              case "end":
+                return _context12.stop();
+            }
+          }
+        }, _callee12, this);
+      }));
+
+      function _PUT(_x10, _x11) {
+        return _PUT2.apply(this, arguments);
+      }
+
+      return _PUT;
+    }()
+    /**
+     * HTTP GET against the configured Authority.
+     * @param  {String} path - HTTP Path to request.
+     * @param  {Object} params - Map of parameters to supply.
+     * @return {FabricHTTPResult|String} Result of request.
+     */
+
+  }, {
+    key: "_GET",
+    value: function () {
+      var _GET2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee13(key, params) {
+        return _regeneratorRuntime().wrap(function _callee13$(_context13) {
+          while (1) {
+            switch (_context13.prev = _context13.next) {
+              case 0:
+                return _context13.abrupt("return", this.request('get', key, params));
+
+              case 1:
+              case "end":
+                return _context13.stop();
+            }
+          }
+        }, _callee13, this);
+      }));
+
+      function _GET(_x12, _x13) {
+        return _GET2.apply(this, arguments);
+      }
+
+      return _GET;
+    }()
+    /**
+     * HTTP POST against the configured Authority.
+     * @param  {String} path - HTTP Path to request.
+     * @param  {Object} params - Map of parameters to supply.
+     * @return {FabricHTTPResult|String} Result of request.
+     */
+
+  }, {
+    key: "_POST",
+    value: function () {
+      var _POST2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee14(key, obj) {
+        var params,
+            result,
+            options,
+            _args14 = arguments;
+        return _regeneratorRuntime().wrap(function _callee14$(_context14) {
+          while (1) {
+            switch (_context14.prev = _context14.next) {
+              case 0:
+                params = _args14.length > 2 && _args14[2] !== undefined ? _args14[2] : {};
+                result = null;
+                options = null;
+                _context14.t0 = params.mode;
+                _context14.next = _context14.t0 === 'query' ? 6 : 8;
+                break;
+
+              case 6:
+                options = Object.assign({}, {
+                  body: obj,
+                  mode: 'query'
+                });
+                return _context14.abrupt("break", 10);
+
+              case 8:
+                options = Object.assign({}, params, {
+                  body: obj,
+                  mode: 'body'
+                });
+                return _context14.abrupt("break", 10);
+
+              case 10:
+                _context14.next = 12;
+                return this.request('post', key, options);
+
+              case 12:
+                result = _context14.sent;
+                return _context14.abrupt("return", result);
+
+              case 14:
+              case "end":
+                return _context14.stop();
+            }
+          }
+        }, _callee14, this);
+      }));
+
+      function _POST(_x14, _x15) {
+        return _POST2.apply(this, arguments);
+      }
+
+      return _POST;
+    }()
+    /**
+     * HTTP OPTIONS on the configured Authority.
+     * @param  {String} path - HTTP Path to request.
+     * @param  {Object} params - Map of parameters to supply.
+     * @return {Object} - Full description of remote resource.
+     */
+
+  }, {
+    key: "_OPTIONS",
+    value: function () {
+      var _OPTIONS2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee15(key, params) {
+        return _regeneratorRuntime().wrap(function _callee15$(_context15) {
+          while (1) {
+            switch (_context15.prev = _context15.next) {
+              case 0:
+                return _context15.abrupt("return", this.request('options', key, params));
+
+              case 1:
+              case "end":
+                return _context15.stop();
+            }
+          }
+        }, _callee15, this);
+      }));
+
+      function _OPTIONS(_x16, _x17) {
+        return _OPTIONS2.apply(this, arguments);
+      }
+
+      return _OPTIONS;
+    }()
+    /**
+     * HTTP PATCH on the configured Authority.
+     * @param  {String} path - HTTP Path to request.
+     * @param  {Object} body - Map of parameters to supply.
+     * @return {Object} - Full description of remote resource.
+     */
+
+  }, {
+    key: "_PATCH",
+    value: function () {
+      var _PATCH2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee16(key, body) {
+        return _regeneratorRuntime().wrap(function _callee16$(_context16) {
+          while (1) {
+            switch (_context16.prev = _context16.next) {
+              case 0:
+                return _context16.abrupt("return", this.request('patch', key, {
+                  body: body
+                }));
+
+              case 1:
+              case "end":
+                return _context16.stop();
+            }
+          }
+        }, _callee16, this);
+      }));
+
+      function _PATCH(_x18, _x19) {
+        return _PATCH2.apply(this, arguments);
+      }
+
+      return _PATCH;
+    }()
+    /**
+     * HTTP DELETE on the configured Authority.
+     * @param  {String} path - HTTP Path to request.
+     * @param  {Object} params - Map of parameters to supply.
+     * @return {Object} - Full description of remote resource.
+     */
+
+  }, {
+    key: "_DELETE",
+    value: function () {
+      var _DELETE2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee17(key, params) {
+        return _regeneratorRuntime().wrap(function _callee17$(_context17) {
+          while (1) {
+            switch (_context17.prev = _context17.next) {
+              case 0:
+                return _context17.abrupt("return", this.request('delete', key, params));
+
+              case 1:
+              case "end":
+                return _context17.stop();
+            }
+          }
+        }, _callee17, this);
+      }));
+
+      function _DELETE(_x20, _x21) {
+        return _DELETE2.apply(this, arguments);
+      }
+
+      return _DELETE;
+    }()
+  }, {
+    key: "_SEARCH",
+    value: function () {
+      var _SEARCH2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee18(key, params) {
+        return _regeneratorRuntime().wrap(function _callee18$(_context18) {
+          while (1) {
+            switch (_context18.prev = _context18.next) {
+              case 0:
+                return _context18.abrupt("return", this.request('search', key, params));
+
+              case 1:
+              case "end":
+                return _context18.stop();
+            }
+          }
+        }, _callee18, this);
+      }));
+
+      function _SEARCH(_x22, _x23) {
+        return _SEARCH2.apply(this, arguments);
+      }
+
+      return _SEARCH;
+    }()
+  }]);
+
+  return Remote;
+}(Actor);
+
+module.exports = Remote;
+
+var Remote$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null
+});
+
 var FabricBridge = /*#__PURE__*/function (_Component) {
   _inherits(FabricBridge, _Component);
 
@@ -2462,7 +3616,7 @@ var FabricBridge = /*#__PURE__*/function (_Component) {
       }
     }, _this.settings);
     console.log('bridge settings:', _this.settings);
-    _this.remote = new Remote__namespace({
+    _this.remote = new Remote$1({
       host: _this.settings.host,
       port: _this.settings.port,
       secure: _this.settings.secure
@@ -2564,8 +3718,8 @@ var FabricBridge = /*#__PURE__*/function (_Component) {
   }, {
     key: "send",
     value: function () {
-      var _send = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(message) {
-        return regeneratorRuntime.wrap(function _callee$(_context) {
+      var _send = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(message) {
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
@@ -2588,8 +3742,8 @@ var FabricBridge = /*#__PURE__*/function (_Component) {
   }, {
     key: "start",
     value: function () {
-      var _start = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+      var _start = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
