@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 // State
-import * as defaults from '../settings/state';
+// import * as defaults from '../settings/state';
 
 // Dependencies
 import merge from 'lodash.merge';
@@ -29,7 +29,7 @@ class FabricBridge extends Component {
       host: 'localhost',
       port: 9999,
       secure: false
-    }, defaults, props);
+    }, props);
 
     this.state = merge({
       integrity: 'sha256-deadbeefbabe',
