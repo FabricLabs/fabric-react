@@ -16,24 +16,21 @@ export default [{
       file: pkg.main,
       format: 'cjs',
       globals: {
-        'buffer': 'Buffer',
-        'crypto': 'Crypto',
         'react': 'React',
         'react-dom': 'ReactDOM',
-        'prop-types': 'PropTypes',
-        'semantic-ui-react': 'SemanticUIReact',
+        'semantic-ui-react': 'semanticUIReact',
+        'lodash.merge': 'merge',
+        'bip39': 'bip39',
         'trezor-connect': 'TrezorConnect'
       },
     }
   ],
   external: [
-    'buffer',
-    'crypto',
     'react',
-    'react-dom',
-    'prop-types',
+    'bip39',
+    'trezor-connect',
     'semantic-ui-react',
-    'trezor-connect'
+    'lodash.merge'
   ],
   plugins: [
     resolve({
