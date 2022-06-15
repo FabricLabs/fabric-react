@@ -39,10 +39,10 @@
   "homepage": "https://github.com/FabricLabs/fabric-react#readme",
   "dependencies": {
     "elliptic": "^6.5.4",
-    "rollup": "^2.72.1"
+    "rollup": "^2.75.6"
   },
   "devDependencies": {
-    "@babel/core": "^7.17.10",
+    "@babel/core": "^7.18.5",
     "@babel/preset-env": "^7.17.10",
     "@babel/preset-react": "^7.16.7",
     "@rollup/plugin-babel": "^5.3.1",
