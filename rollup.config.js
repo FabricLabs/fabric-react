@@ -16,6 +16,8 @@ export default [{
       file: pkg.main,
       format: 'cjs',
       globals: {
+        'buffer': 'buffer',
+        'crypto': 'crypto',
         'react': 'React',
         'react-dom': 'ReactDOM',
         'semantic-ui-react': 'semanticUIReact',
