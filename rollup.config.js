@@ -9,7 +9,7 @@ import babel from '@rollup/plugin-babel';
 import pkg from './package.json';
 
 export default [{
-  input: 'module.js',
+  input: 'components/index.js',
   output: [
     {
       name: 'FabricReact',
