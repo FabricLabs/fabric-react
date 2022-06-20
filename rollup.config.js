@@ -33,8 +33,12 @@ export default [{
     'lodash.merge'
   ],
   plugins: [
+    babel({ 
+        exclude: 'node_modules/**',
+        presets: ['@babel/preset-env', '@babel/preset-react'],
+        babelHelpers: 'bundled'
+    }),
     resolve({
-
       // If you have external dependencies installed from
       // npm, you'll most likely need these plugins. In
       // some cases you'll need additional configuration �
@@ -42,13 +46,8 @@ export default [{
       // https://github.com/rollup/rollup-plugin-commonjs
         // preferBuiltins: true		
     }),
-    babel({ 
-        exclude: 'node_modules/**',
-        presets: ['@babel/env', '@babel/preset-react'],
-        babelHelpers: 'bundled'
-    }),
     commonjs({
-      // preferBuiltins: false
+      preferBuiltins: false
     }),
     json()
   ],
