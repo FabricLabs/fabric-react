@@ -59,7 +59,7 @@
   "peerDependencies": {
     "@fabric/core": "FabricLabs/fabric#feature/node-16",
     "@fabric/http": "FabricLabs/fabric-http#feature/node-16",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }
