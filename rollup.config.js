@@ -6,6 +6,7 @@ import commonjs from '@rollup/plugin-commonjs';
 // import minify from 'rollup-plugin-minify'
 import resolve from '@rollup/plugin-node-resolve';
 import babel from '@rollup/plugin-babel';
+import nodePolyfills from 'rollup-plugin-polyfill-node';
 
 export default [{
   input: 'components/index.js',
@@ -50,7 +51,8 @@ export default [{
     commonjs({
       preferBuiltins: false
     }),
-    json()
+    json(),
+    nodePolyfills()
   ],
   // sourceMap: true
 }];
