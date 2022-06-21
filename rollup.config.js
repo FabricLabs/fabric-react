@@ -6,6 +6,7 @@ import commonjs from '@rollup/plugin-commonjs';
 // import minify from 'rollup-plugin-minify'
 import resolve from '@rollup/plugin-node-resolve';
 import babel from '@rollup/plugin-babel';
+import nodeGlobals from 'rollup-plugin-node-globals';
 import nodePolyfills from 'rollup-plugin-polyfill-node';
 
 export default [{
@@ -16,29 +17,38 @@ export default [{
       file: "assets/fabric.react.js",
       format: 'cjs',
       globals: {
-        'buffer': 'buffer',
-        'crypto': 'crypto',
+        // 'buffer': 'buffer',
+        // 'crypto': 'crypto',
+        // 'http': 'http',
         'react': 'React',
         'react-dom': 'ReactDOM',
         'semantic-ui-react': 'semanticUIReact',
-        'lodash.merge': 'merge',
-        'bip39': 'bip39',
-        'trezor-connect': 'TrezorConnect'
+        // 'lodash.merge': 'merge',
+        // 'bip39': 'bip39',
+        // 'trezor-connect': 'TrezorConnect'
       },
     }
   ],
   external: [
     'react',
-    'bip39',
-    'trezor-connect',
+    // 'bip39',
+    // 'http',
+    // 'trezor-connect',
     'semantic-ui-react',
-    'lodash.merge'
+    // 'lodash.merge'
   ],
   plugins: [
+    json(),
+    nodeGlobals(),
+    nodePolyfills(),
     babel({ 
         exclude: 'node_modules/**',
         presets: ['@babel/preset-env', '@babel/preset-react'],
         babelHelpers: 'bundled'
+    }),
+    commonjs({
+      preferBuiltins: false,
+      transformMixedEsModules: true
     }),
     resolve({
       // If you have external dependencies installed from
@@ -46,13 +56,9 @@ export default [{
       // some cases you'll need additional configuration �
       // consult the documentation for details:
       // https://github.com/rollup/rollup-plugin-commonjs
-        // preferBuiltins: true		
+        // preferBuiltins: true,	
+        browser: true		
     }),
-    commonjs({
-      preferBuiltins: false
-    }),
-    json(),
-    nodePolyfills()
   ],
   // sourceMap: true
 }];
