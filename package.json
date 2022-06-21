@@ -2,8 +2,7 @@
   "name": "@fabric/react",
   "version": "0.1.0",
   "description": "Fabric integration for React",
-  "main": "index.js",
-  "module": "assets/fabric.react.js",
+  "main": "assets/fabric.react.js",
   "type": "module",
   "scripts": {
     "build": "rollup -c",
