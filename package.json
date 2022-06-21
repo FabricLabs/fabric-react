@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Fabric integration for React",
   "main": "index.js",
-  "module": "module.js",
+  "module": "assets/fabric.react.js",
   "type": "module",
   "scripts": {
     "build": "rollup -c",

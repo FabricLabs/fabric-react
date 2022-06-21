@@ -6,14 +6,13 @@ import commonjs from '@rollup/plugin-commonjs';
 // import minify from 'rollup-plugin-minify'
 import resolve from '@rollup/plugin-node-resolve';
 import babel from '@rollup/plugin-babel';
-import pkg from './package.json';
 
 export default [{
   input: 'components/index.js',
   output: [
     {
       name: 'FabricReact',
-      file: pkg.main,
+      file: "assets/fabric.react.js",
       format: 'cjs',
       globals: {
         'buffer': 'buffer',
