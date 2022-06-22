@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 // State
 // import * as defaults from '../settings/state';
@@ -21,7 +21,7 @@ import {
 // import * as Worker from '@fabric/core/types/worker';
 import * as Remote from '@fabric/http/types/remote';
 
-class FabricBridge extends Component {
+class FabricBridge extends React.Component {
   constructor (props) {
     super(props);
 

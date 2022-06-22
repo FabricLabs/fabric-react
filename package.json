@@ -2,11 +2,11 @@
   "name": "@fabric/react",
   "version": "0.1.0",
   "description": "Fabric integration for React",
-  "main": "index.js",
-  "module": "module.js",
+  "main": "assets/fabric.react.js",
   "type": "module",
   "scripts": {
     "build": "rollup -c",
+    "dev": "rollup -c -w",
     "test": "mocha tests"
   },
   "repository": {
@@ -39,25 +39,29 @@
   "homepage": "https://github.com/FabricLabs/fabric-react#readme",
   "dependencies": {
     "elliptic": "^6.5.4",
-    "rollup": "^2.72.1"
+    "rollup": "^2.75.6"
   },
   "devDependencies": {
-    "@babel/core": "^7.17.10",
+    "@babel/core": "^7.18.5",
     "@babel/preset-env": "^7.17.10",
     "@babel/preset-react": "^7.16.7",
     "@rollup/plugin-babel": "^5.3.1",
     "@rollup/plugin-commonjs": "^22.0.0",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^13.3.0",
+    "fomantic-ui-react": "^0.0.1-alpha.12",
     "mocha": "^10.0.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-jsx": "^1.0.3",
-    "rollup-plugin-minify": "^1.0.3"
+    "rollup-plugin-minify": "^1.0.3",
+    "rollup-plugin-node-globals": "^1.4.0",
+    "rollup-plugin-polyfill-node": "^0.9.0",
+    "trezor-connect": "^8.2.9"
   },
   "peerDependencies": {
     "@fabric/core": "FabricLabs/fabric#feature/node-16",
     "@fabric/http": "FabricLabs/fabric-http#feature/node-16",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }
