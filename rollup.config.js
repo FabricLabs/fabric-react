@@ -22,11 +22,12 @@ export default [{
         // 'http': 'http',
         'react': 'React',
         'react-dom': 'ReactDOM',
-        'semantic-ui-react': 'semanticUIReact',
+        'fomantic-ui-react': 'fomanticUIReact',
         // 'lodash.merge': 'merge',
         // 'bip39': 'bip39',
         // 'trezor-connect': 'TrezorConnect'
       },
+      exports: 'named'
     }
   ],
   external: [
@@ -34,7 +35,7 @@ export default [{
     // 'bip39',
     // 'http',
     // 'trezor-connect',
-    'semantic-ui-react',
+    'fomantic-ui-react',
     // 'lodash.merge'
   ],
   plugins: [
@@ -48,7 +49,7 @@ export default [{
     }),
     commonjs({
       preferBuiltins: false,
-      transformMixedEsModules: true
+      // transformMixedEsModules: true
     }),
     resolve({
       // If you have external dependencies installed from
