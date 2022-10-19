@@ -38,26 +38,26 @@
   },
   "homepage": "https://github.com/FabricLabs/fabric-react#readme",
   "dependencies": {
-    "elliptic": "^6.5.4",
-    "rollup": "^2.72.1"
+    "elliptic": "6.5.4",
+    "rollup": "2.72.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.17.10",
-    "@babel/preset-env": "^7.17.10",
-    "@babel/preset-react": "^7.16.7",
-    "@rollup/plugin-babel": "^5.3.1",
-    "@rollup/plugin-commonjs": "^22.0.0",
-    "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^13.3.0",
-    "mocha": "^10.0.0",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-jsx": "^1.0.3",
-    "rollup-plugin-minify": "^1.0.3"
+    "@babel/core": "7.17.10",
+    "@babel/preset-env": "7.17.10",
+    "@babel/preset-react": "7.16.7",
+    "@rollup/plugin-babel": "5.3.1",
+    "@rollup/plugin-commonjs": "22.0.0",
+    "@rollup/plugin-json": "4.1.0",
+    "@rollup/plugin-node-resolve": "13.3.0",
+    "mocha": "10.0.0",
+    "rollup-plugin-commonjs": "10.1.0",
+    "rollup-plugin-jsx": "1.0.3",
+    "rollup-plugin-minify": "1.0.3"
   },
   "peerDependencies": {
-    "@fabric/core": "FabricLabs/fabric#feature/node-16",
-    "@fabric/http": "FabricLabs/fabric-http#feature/node-16",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "@fabric/core": "FabricLabs/fabric#feature/encryption",
+    "@fabric/http": "FabricLabs/fabric-http#feature/compiler",
+    "react": "17.0.1",
+    "react-dom": "17.0.1"
   }
 }
