@@ -2,12 +2,12 @@
   "name": "@fabric/react",
   "version": "0.1.0",
   "description": "Fabric integration for React",
-  "main": "index.js",
-  "module": "assets/fabric.react.js",
-  "type": "commonjs",
+  "main": "types/fabric.js",
+  "type": "module",
   "scripts": {
-    "build": "rollup -c",
+    "build": "node scripts/build.js",
     "report:install": "rm -rf node_modules && echo \"\n\" > package-lock.json && echo \"$ npm i\" > reports/install.log && npm i >> reports/install.log",
+    "start": "npm run build && node scripts/dev.js",
     "test": "mocha tests"
   },
   "repository": {
@@ -44,6 +44,7 @@
   },
   "devDependencies": {
     "@babel/core": "7.17.10",
+    "@babel/plugin-syntax-jsx": "7.21.4",
     "@babel/preset-env": "7.17.10",
     "@babel/preset-react": "7.16.7",
     "mocha": "10.2.0"
