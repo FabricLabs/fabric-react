@@ -7,6 +7,7 @@
   "scripts": {
     "build": "node scripts/build.js",
     "build:coverage": "npm run coverage && c8 report --reporter=html",
+    "coverage": "c8 npm test",
     "report:coverage": "npm run build:coverage && c8 report --reporter=text-lcov > reports/coverage.lcov",
     "report:install": "rm -rf node_modules && echo \"\n\" > package-lock.json && echo \"$ npm i\" > reports/install.log && npm i >> reports/install.log",
     "start": "npm run build && node scripts/dev.js",
