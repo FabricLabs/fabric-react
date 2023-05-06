@@ -6,6 +6,8 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build.js",
+    "build:coverage": "npm run coverage && c8 report --reporter=html",
+    "report:coverage": "npm run build:coverage && c8 report --reporter=text-lcov > reports/coverage.lcov",
     "report:install": "rm -rf node_modules && echo \"\n\" > package-lock.json && echo \"$ npm i\" > reports/install.log && npm i >> reports/install.log",
     "start": "npm run build && node scripts/dev.js",
     "test": "mocha tests"
@@ -47,6 +49,7 @@
     "@babel/plugin-syntax-jsx": "7.21.4",
     "@babel/preset-env": "7.17.10",
     "@babel/preset-react": "7.16.7",
+    "c8": "7.13.0",
     "mocha": "10.2.0"
   },
   "peerDependencies": {
