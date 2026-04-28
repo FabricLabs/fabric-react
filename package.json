@@ -2,8 +2,15 @@
   "name": "@fabric/react",
   "version": "0.1.0",
   "description": "Fabric integration for React",
-  "main": "types/fabric.js",
+  "main": "./index.js",
   "type": "module",
+  "exports": {
+    ".": "./index.js",
+    "./Bridge": "./components/Bridge.js",
+    "./components/Bridge": "./components/Bridge.js",
+    "./functions/*": "./functions/*",
+    "./constants/*": "./constants/*"
+  },
   "scripts": {
     "build": "node scripts/build.js",
     "build:coverage": "npm run coverage && c8 report --reporter=html",
@@ -46,6 +53,8 @@
   "homepage": "https://github.com/FabricLabs/fabric-react#readme",
   "dependencies": {
     "elliptic": "6.5.4",
+    "fast-json-patch": "^3.1.1",
+    "lodash.merge": "^4.6.2",
     "rollup": "2.72.1"
   },
   "devDependencies": {
@@ -59,7 +68,8 @@
   "peerDependencies": {
     "@fabric/core": "FabricLabs/fabric#feature/v0.1.0-RC1",
     "@fabric/http": "FabricLabs/fabric-http#feature/v0.1.0-RC1",
-    "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react": "^17.0.1 || ^18.2.0",
+    "react-dom": "^17.0.1 || ^18.2.0",
+    "semantic-ui-react": "^2.1.0"
   }
 }
