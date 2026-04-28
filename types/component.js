@@ -1,11 +1,11 @@
+import React, { Component } from 'react';
+
 // Defaults
 import * as state from '../settings/state';
 
 // Dependencies
-import * as EC from '../../node_modules/elliptic/lib/elliptic/ec';
 import merge from 'lodash.merge';
 
-import React, { Component } from 'react';
 // import { connect } from 'react-redux';
 // import * as d3 from 'd3';
 // import * as D3GraphViz from 'd3-graphviz';
@@ -13,7 +13,7 @@ import { Graphviz } from 'graphviz-react';
 
 // Components
 // import FabricStateMapper from '../StateMapper';
-import * as Actor from '@fabric/core/types/actor';
+// import Actor from '@fabric/core/types/actor';
 
 class FabricComponent extends Component {
   constructor (props) {
@@ -28,7 +28,6 @@ class FabricComponent extends Component {
 
     // Fabric Actor
     this.actor = new Actor(this.state);
-    this.ec = new EC('secp256k1');
 
     return this;
   }

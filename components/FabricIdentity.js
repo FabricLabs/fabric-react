@@ -1,7 +1,5 @@
-import * as defaults from '../settings/state';
-
-import merge from 'lodash.merge';
-import FabricComponent from '../types/component';
+import React, { Component } from 'react';
+import Identity from '@fabric/core/types/identity';
 
 // Components
 import {
@@ -13,23 +11,23 @@ import {
 
 import SeedEntryForm from './SeedEntryForm';
 
-class FabricIdentity extends FabricComponent {
+class FabricIdentity extends Component {
   constructor (props) {
     super(props);
 
-    this.settings = merge({
+    this.settings = Object.assign({
       explain: false,
       modalOpen: false,
       keys: []
     }, props);
 
+    this.identity = new Identity(this.settings);
+
     // TODO: prepare Fabric
-    // i.e., use _state here, then import from getter and apply properties
-    // _from_ @react
-    this.state = {
+    this._state = {
       explain: true,
-      identity: null,
-      integrity: 'sha256-deadbeefbabe',
+      handle: this.identity.id,
+      identity: this.identity.toObject(),
       status: 'PAUSED'
     };
 
@@ -50,7 +48,7 @@ class FabricIdentity extends FabricComponent {
       <>
         <Menu.Item className='borderless'>
           <Button icon onClick={this._handleCardClick.bind(this)} labelPosition='left'>
-            <span>{/*<strong>Identity:</strong> */}<code>{this.state.identity || 'anonymous'}</code></span>
+            <span>{/*<strong>Identity:</strong> */}<code>{this._state.handle || 'anonymous'}</code></span>
             <Icon name='user' />
           </Button>
         </Menu.Item>
