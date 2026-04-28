@@ -1,27 +1,27 @@
-import { Component } from 'react';
+const React = require('react');
 
 // State
 // import * as defaults from '../settings/state';
 
 // Dependencies
-import merge from 'lodash.merge';
+const merge = require('lodash.merge');
 // import FabricComponent from '../types/component';
 
 // Components
-import {
+const {
   Button,
   Card,
   Feed,
   Icon,
   Label
-} from 'semantic-ui-react';
+} = require('semantic-ui-react');
 
 // Fabric Types
 // import * as Store from '@fabric/core/types/store';
 // import * as Worker from '@fabric/core/types/worker';
-import * as Remote from '@fabric/http/types/remote';
+const Remote = require('@fabric/http/types/remote');
 
-class FabricBridge extends Component {
+class FabricBridge extends React.Component {
   constructor (props) {
     super(props);
 
@@ -141,4 +141,4 @@ class FabricBridge extends Component {
   }
 }
 
-export default FabricBridge;
+module.exports = FabricBridge;

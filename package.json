@@ -37,6 +37,9 @@
   ],
   "author": "Fabric Labs",
   "license": "MIT",
+  "engines": {
+    "node": "24.x"
+  },
   "bugs": {
     "url": "https://github.com/FabricLabs/fabric-react/issues"
   },
@@ -54,8 +57,8 @@
     "mocha": "10.2.0"
   },
   "peerDependencies": {
-    "@fabric/core": "FabricLabs/fabric#feature/clean-install",
-    "@fabric/http": "FabricLabs/fabric-http#feature/graphql",
+    "@fabric/core": "FabricLabs/fabric#feature/v0.1.0-RC1",
+    "@fabric/http": "FabricLabs/fabric-http#feature/v0.1.0-RC1",
     "react": "17.0.1",
     "react-dom": "17.0.1"
   }

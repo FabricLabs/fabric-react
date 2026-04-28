@@ -1,7 +1,7 @@
 'use strict';
 
 import assert from 'assert';
-import * as overview from '../package.json' assert { type: 'json' };
+import * as overview from '../package.json' with { type: 'json' };
 // const FabricBridge = require('../components/FabricBridge');
 
 describe('@fabric/react', function () {

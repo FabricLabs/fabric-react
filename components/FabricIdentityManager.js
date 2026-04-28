@@ -1,153 +1,253 @@
+'use strict';
+
 import React, { Component } from 'react';
-// Dependencies
-import merge from 'lodash.merge';
-import TrezorConnect from 'trezor-connect';
-
-// import FabricComponent from '../types/component';
-
-// Components
-import {
-  Button,
-  Card,
-  Form,
-  // Container,
-  Icon,
-  // Grid,
-  // Menu,
-  // Segment
-} from 'semantic-ui-react';
-
-import IdentityPicker from './IdentityPicker';
-import SeedEntryForm from './SeedEntryForm';
+import { Button, Modal, List, Icon, Form, Message } from 'semantic-ui-react';
 
 class FabricIdentityManager extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
-
-    this.settings = merge({
-      explain: false,
-      keys: []
-    }, props);
-
-    // TODO: prepare Fabric
-    // i.e., use _state here, then import from getter and apply properties
-    // _from_ @react
     this.state = {
-      explain: true,
-      hash: null,
+      isModalOpen: false,
       identities: [],
-      integrity: 'sha256-deadbeefbabe',
-      status: 'PAUSED',
-      step: 1
+      currentView: 'list', // 'list', 'create', 'restore'
+      derivationPassword: '',
+      passwordConfirmation: '',
+      passwordError: null,
+      isCreating: false
     };
-
-    return this;
   }
 
-  handleChange = input => event => {
-    this.setState({[input]: event.target.value})
-  }
+  handleOpen = () => this.setState({ isModalOpen: true });
+  handleClose = () => this.setState({ 
+    isModalOpen: false,
+    currentView: 'list',
+    derivationPassword: '',
+    passwordConfirmation: '',
+    passwordError: null,
+    isCreating: false
+  });
 
-  setStep () {
-    const { step } = this.state;
-    this.setState({ step });
-  }
+  handleCreateNew = () => this.setState({ currentView: 'create' });
+  handleRestore = () => this.setState({ currentView: 'restore' });
+  handleBack = () => this.setState({ 
+    currentView: 'list',
+    derivationPassword: '',
+    passwordConfirmation: '',
+    passwordError: null,
+    isCreating: false
+  });
 
-  nextStep () {
-    const { step } = this.state;
-    this.setState({
-      step: step + 1
+  handlePasswordChange = (e) => {
+    this.setState({ 
+      derivationPassword: e.target.value,
+      passwordError: null
     });
-  }
+  };
 
-  previoustStep () {
-    const { step } = this.state;
-    this.setState({
-      step: step - 1
+  handlePasswordConfirmationChange = (e) => {
+    this.setState({ 
+      passwordConfirmation: e.target.value,
+      passwordError: null
     });
-  }
+  };
 
-  start () {
-    TrezorConnect.manifest({
-      email: 'labs@fabric.pub',
-      appUrl: 'https://hub.fabric.pub'
-    });
+  validatePassword = () => {
+    const { derivationPassword, passwordConfirmation } = this.state;
 
-    this.setState({ status: 'STARTED' });
-    return this;
-  }
-
-  render () {
-    const { step } = this.state;
-    const { firstName, lastName, email, age, city, country } = this.state;
-    const values = { firstName, lastName, email, age, city, country };
-
-    let element = null;
-
-    switch (step) {
-      case 1:
-        element = (
-          <IdentityPicker nextStep={this.nextStep.bind(this)} setStep={this.setStep.bind(this)} handleChange={this.handleChange.bind(this)} values={values} />
-        );
-        break;
-      case 2:
-        element = (
-          <SeedEntryForm nextStep={this.nextStep.bind(this)} setStep={this.setStep.bind(this)} handleChange={this.handleChange.bind(this)} values={values} />
-        );
-        break;
-      case 3:
-        element = (
-          <IdentityPicker nextStep={this.nextStep.bind(this)} setStep={this.setStep.bind(this)} handleChange={this.handleChange.bind(this)} values={values} />
-        );
-        break;
-      case 4:
-        element = (
-          <IdentityPicker nextStep={this.nextStep.bind(this)} setStep={this.setStep.bind(this)} handleChange={this.handleChange.bind(this)} values={values} />
-        );
-        break;
+    if (!derivationPassword) {
+      return 'Password is required';
     }
+
+    if (derivationPassword.length < 8) {
+      return 'Password must be at least 8 characters long';
+    }
+
+    if (!/[A-Z]/.test(derivationPassword)) {
+      return 'Password must contain at least one uppercase letter';
+    }
+
+    if (!/[a-z]/.test(derivationPassword)) {
+      return 'Password must contain at least one lowercase letter';
+    }
+
+    if (!/[0-9]/.test(derivationPassword)) {
+      return 'Password must contain at least one number';
+    }
+
+    if (!/[!@#$%^&*]/.test(derivationPassword)) {
+      return 'Password must contain at least one special character (!@#$%^&*)';
+    }
+
+    if (derivationPassword !== passwordConfirmation) {
+      return 'Passwords do not match';
+    }
+
+    return null;
+  };
+
+  handlePasswordSubmit = async (e) => {
+    e.preventDefault();
+    
+    const error = this.validatePassword();
+    if (error) {
+      this.setState({ passwordError: error });
+      return;
+    }
+
+    this.setState({ isCreating: true });
+
+    try {
+      // TODO: Implement actual identity creation
+      await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate API call
+      
+      // For now, just add a dummy identity
+      const newIdentity = {
+        id: 'id' + Math.random().toString(36).substr(2, 9),
+        name: 'New Identity',
+        created: new Date().toISOString()
+      };
+
+      this.setState(prevState => ({
+        identities: [...prevState.identities, newIdentity],
+        currentView: 'list',
+        derivationPassword: '',
+        passwordConfirmation: '',
+        passwordError: null,
+        isCreating: false
+      }));
+    } catch (error) {
+      this.setState({ 
+        passwordError: 'Failed to create identity. Please try again.',
+        isCreating: false
+      });
+    }
+  };
+
+  renderDerivationPasswordForm = () => (
+    <Form onSubmit={this.handlePasswordSubmit}>
+      <Form.Field>
+        <label>Derivation Password</label>
+        <Form.Input
+          type="password"
+          placeholder="Enter a secure password"
+          value={this.state.derivationPassword}
+          onChange={this.handlePasswordChange}
+          error={!!this.state.passwordError}
+          disabled={this.state.isCreating}
+        />
+      </Form.Field>
+      <Form.Field>
+        <label>Confirm Password</label>
+        <Form.Input
+          type="password"
+          placeholder="Confirm your password"
+          value={this.state.passwordConfirmation}
+          onChange={this.handlePasswordConfirmationChange}
+          error={!!this.state.passwordError}
+          disabled={this.state.isCreating}
+        />
+      </Form.Field>
+      {this.state.passwordError && (
+        <Message negative>
+          <p>{this.state.passwordError}</p>
+        </Message>
+      )}
+      <Message info>
+        <Message.Header>Important</Message.Header>
+        <p>This password will be used to derive your master keys. Store it securely along with your seed phrase.</p>
+        <p>Password requirements:</p>
+        <ul>
+          <li>At least 8 characters long</li>
+          <li>Contains at least one uppercase letter</li>
+          <li>Contains at least one lowercase letter</li>
+          <li>Contains at least one number</li>
+          <li>Contains at least one special character (!@#$%^&*)</li>
+        </ul>
+      </Message>
+      <Button.Group fluid>
+        <Button
+          content='Back'
+          onClick={this.handleBack}
+          disabled={this.state.isCreating}
+        />
+        <Button.Or />
+        <Button
+          primary
+          content={this.state.isCreating ? 'Creating...' : 'Continue'}
+          type="submit"
+          loading={this.state.isCreating}
+          disabled={this.state.isCreating}
+        />
+      </Button.Group>
+    </Form>
+  );
+
+  render() {
+    const { isModalOpen, identities, currentView } = this.state;
 
     return (
       <>
-        <Card fluid>
-          <Card.Content attached='top'>
-            <Form>
-              <Form.Group inline widths='equal'>
-                <Form.Field>
-                  <Form.Input disabled value={this.state.hash} />
-                </Form.Field>
-                <Form.Field>
-                  <Button.Group floated='right'>
-                    <Button><Icon name='history' /></Button>
-                    <Button><Icon name='refresh' /></Button>
+        <Button
+          icon='user'
+          content='Manage Identities'
+          onClick={this.handleOpen}
+        />
+
+        <Modal
+          open={isModalOpen}
+          onClose={this.handleClose}
+          size='small'
+        >
+          <Modal.Header>Identity Manager</Modal.Header>
+          <Modal.Content>
+            {currentView === 'list' ? (
+              identities.length > 0 ? (
+                <List divided relaxed>
+                  {identities.map((identity, index) => (
+                    <List.Item key={index}>
+                      <List.Icon name='user' size='large' verticalAlign='middle' />
+                      <List.Content>
+                        <List.Header>{identity.name || 'Unnamed Identity'}</List.Header>
+                        <List.Description>{identity.id}</List.Description>
+                      </List.Content>
+                    </List.Item>
+                  ))}
+                </List>
+              ) : (
+                <div style={{ textAlign: 'center', padding: '2em' }}>
+                  <p>No identities found. Would you like to:</p>
+                  <Button.Group vertical fluid>
+                    <Button
+                      primary
+                      content='Create New Identity'
+                      icon='plus'
+                      onClick={this.handleCreateNew}
+                      style={{ marginBottom: '1em' }}
+                    />
+                    <Button
+                      content='Restore Existing Identity'
+                      icon='history'
+                      onClick={this.handleRestore}
+                    />
                   </Button.Group>
-                  {/*
-                  <Button.Group>
-                    <Button><Icon name='info' /></Button>
-                    <Button><Icon name='star' /></Button>
-                  </Button.Group>
-                  */}
-                </Form.Field>
-              </Form.Group>
-            </Form>
-          </Card.Content>
-          <Card.Content hidden={(!this.isVisible())}>
-            <Card.Header>Identity Manager</Card.Header>
-            <Card.Meta>
-              <div><strong>Status:</strong> <pre>{this.state.status}</pre></div>
-              <div><strong>State:</strong> <pre>{JSON.stringify(this.state, null, '  ')}</pre></div>
-            </Card.Meta>
-            <Card.Description>Get started by restoring from an existing seed phrase or generating a new one.</Card.Description>
-          </Card.Content>
-          <Card.Content extra attached='bottom'>{element}</Card.Content>
-        </Card>
+                </div>
+              )
+            ) : currentView === 'create' ? (
+              this.renderDerivationPasswordForm()
+            ) : (
+              <div>Restore form coming soon...</div>
+            )}
+          </Modal.Content>
+          {currentView === 'list' && (
+            <Modal.Actions>
+              <Button onClick={this.handleClose}>
+                Close
+              </Button>
+            </Modal.Actions>
+          )}
+        </Modal>
       </>
     );
-  }
-
-  isVisible () {
-    if (this.state.explain) return true;
-    return false;
   }
 }
 
